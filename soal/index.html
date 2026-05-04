@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Soal Viewer | Lenterago</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root { --header-h: 80px; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background-color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    #siteHeader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    main {
+      width: 100%;
+      padding-top: var(--header-h);
+    }
+
+    .embed-box {
+      width: 100%;
+      height: calc(100vh - var(--header-h));
+      background-color: #fff;
+      overflow: hidden;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="siteHeader"></div>
+
+  <main id="mainArea">
+    <div class="embed-box" id="monitorBox">
+      <iframe
+        src="/viewer/"
+        id="contentFrame"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script>
+    let headerRO = null;
+
+    async function injectPart(id, file) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      try {
+        const res = await fetch(file, { cache: "no-store" });
+        if (!res.ok) return;
+
+        el.innerHTML = await res.text();
+
+        // Biarkan DOM/CSS settle dulu
+        requestAnimationFrame(() => {
+          setHeaderHeightVar();
+          if (id === "siteHeader") setupHeaderObserver();
+        });
+
+      } catch (e) {
+        // silent fail
+      }
+    }
+
+    injectPart("siteHeader", "../header.html").then(() => {
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      menuBtn?.addEventListener("click", () => mobileNav.classList.toggle("hidden"));
+    });
+
+    injectPart("siteFooter", "../footer.html");
+
+    function setHeaderHeightVar() {
+      const header = document.getElementById("siteHeader");
+      if (!header) return;
+
+      const h = Math.ceil(header.getBoundingClientRect().height || 0);
+      if (h > 0) {
+        document.documentElement.style.setProperty("--header-h", h + "px");
+      }
+    }
+
+    function setupHeaderObserver() {
+      const headerEl = document.getElementById("siteHeader");
+      if (!headerEl) return;
+
+      if (headerRO) return; // jangan bikin berkali-kali
+
+      if ("ResizeObserver" in window) {
+        headerRO = new ResizeObserver(() => setHeaderHeightVar());
+        headerRO.observe(headerEl);
+      }
+    }
+
+    window.addEventListener("resize", setHeaderHeightVar);
+    window.addEventListener("load", setHeaderHeightVar);
+
+    // Fonts sering jadi biang tinggi header berubah setelah render awal
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => setHeaderHeightVar());
+    }
+  </script>
+</body>
+</html>

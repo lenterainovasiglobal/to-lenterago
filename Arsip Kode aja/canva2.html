@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TO Lenterago - Try Out Online</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+    
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="antialiased"><!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+   <div class="mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+     <div class="flex items-center space-x-2">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center text-2xl">
+       🔥
+      </div><span id="brand-name" class="text-2xl font-bold">TO Lenterago</span>
+     </div>
+     <div class="hidden md:flex space-x-8"><a href="#beranda" class="hover:opacity-80 transition-opacity">Beranda</a> <a href="#tentang" class="hover:opacity-80 transition-opacity">Tentang</a> <a href="#fitur" class="hover:opacity-80 transition-opacity">Fitur</a> <a href="#kontak" class="hover:opacity-80 transition-opacity">Kontak</a>
+     </div><button id="nav-cta" class="px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg"> Daftar Sekarang </button>
+    </div>
+   </div>
+  </nav><!-- Hero Section -->
+  <section id="beranda" class="pt-28 pb-12 px-6">
+   <div class="max-w-5xl mx-auto text-center">
+    <div class="animate-fade-in-up">
+     <h1 id="hero-title" class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Persiapan <span class="gradient-text">TO UTBK &amp; TO SAT</span><br>
+       Terbaik untuk Masa Depanmu</h1>
+     <p id="hero-subtitle" class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">Platform try out terlengkap dengan sistem CBT profesional. Sudah menangani puluhan TO dengan soal yang dipelajari dari ujian sebenarnya!</p><button id="cta-primary" class="px-8 py-3 text-lg font-bold rounded-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"> Daftar Sekarang → </button>
+    </div>
+   </div>
+  </section><!-- Stats Section -->
+  <section class="py-10 px-6">
+   <div class="max-w-5xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+     <div id="stat-1" class="text-center p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-2">
+       📝
+      </div>
+      <div class="text-3xl font-bold mb-1">
+       TO UTBK
+      </div>
+      <div class="text-sm opacity-80">
+       &amp; TO SAT
+      </div>
+     </div>
+     <div id="stat-2" class="text-center p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-2">
+       🏆
+      </div>
+      <div class="text-3xl font-bold mb-1">
+       Puluhan
+      </div>
+      <div class="text-sm opacity-80">
+       TO Terlaksana
+      </div>
+     </div>
+     <div id="stat-3" class="text-center p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-2">
+       💻
+      </div>
+      <div class="text-3xl font-bold mb-1">
+       Sistem
+      </div>
+      <div class="text-sm opacity-80">
+       CBT Profesional
+      </div>
+     </div>
+     <div id="stat-4" class="text-center p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-2">
+       📜
+      </div>
+      <div class="text-3xl font-bold mb-1">
+       2 Tahun
+      </div>
+      <div class="text-sm opacity-80">
+       Garansi Akses
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- About Section -->
+  <section id="tentang" class="py-12 px-6">
+   <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-10">
+     <h2 id="about-title" class="text-3xl md:text-4xl font-bold mb-4">Kenapa Memilih <span class="gradient-text">TO Lenterago?</span></h2>
+     <p id="about-description" class="text-base md:text-lg max-w-2xl mx-auto opacity-90">Platform try out terpercaya dengan sistem CBT profesional dan soal berkualitas dari ujian sebenarnya</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+     <div id="benefit-1" class="p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-3">
+       🎯
+      </div>
+      <h3 class="text-xl font-bold mb-2">Soal dari Ujian Asli</h3>
+      <p class="text-base opacity-80">Soal dipelajari dari ujian sebenarnya untuk pengalaman yang realistis</p>
+     </div>
+     <div id="benefit-2" class="p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-3">
+       💻
+      </div>
+      <h3 class="text-xl font-bold mb-2">Platform CBT Profesional</h3>
+      <p class="text-base opacity-80">Sistem Computer Based Test yang stabil dan user-friendly</p>
+     </div>
+     <div id="benefit-3" class="p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-3">
+       📱
+      </div>
+      <h3 class="text-xl font-bold mb-2">Akses Semua Perangkat</h3>
+      <p class="text-base opacity-80">Dapat diakses via HP, tablet, atau laptop kapan saja</p>
+     </div>
+     <div id="benefit-4" class="p-6 rounded-xl card-hover">
+      <div class="text-4xl mb-3">
+       📜
+      </div>
+      <h3 class="text-xl font-bold mb-2">Sertifikat &amp; Rapor</h3>
+      <p class="text-base opacity-80">Dapatkan sertifikat hasil dan rapor analisis lengkap</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Features Section -->
+  <section id="fitur" class="py-12 px-6">
+   <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-10">
+     <h2 id="features-title" class="text-3xl md:text-4xl font-bold mb-4"><span class="gradient-text">Fitur Unggulan</span></h2>
+     <p class="text-base md:text-lg opacity-90">Yang akan kamu dapatkan di TO Lenterago</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div id="feature-1" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       📝
+      </div>
+      <h3 class="text-lg font-bold mb-2">TO UTBK &amp; SAT</h3>
+      <p class="text-sm opacity-80">Dua jenis try out dalam satu platform</p>
+     </div>
+     <div id="feature-2" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       🎯
+      </div>
+      <h3 class="text-lg font-bold mb-2">Soal Ujian Asli</h3>
+      <p class="text-sm opacity-80">Dipelajari dari ujian sebenarnya</p>
+     </div>
+     <div id="feature-3" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       💻
+      </div>
+      <h3 class="text-lg font-bold mb-2">Sistem CBT</h3>
+      <p class="text-sm opacity-80">Platform profesional dan stabil</p>
+     </div>
+     <div id="feature-4" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       📱
+      </div>
+      <h3 class="text-lg font-bold mb-2">Multi Perangkat</h3>
+      <p class="text-sm opacity-80">Akses di HP, tablet, atau laptop</p>
+     </div>
+     <div id="feature-5" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       📜
+      </div>
+      <h3 class="text-lg font-bold mb-2">Sertifikat Hasil</h3>
+      <p class="text-sm opacity-80">Dapat sertifikat setiap TO</p>
+     </div>
+     <div id="feature-6" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       📊
+      </div>
+      <h3 class="text-lg font-bold mb-2">Rapor Lengkap</h3>
+      <p class="text-sm opacity-80">Analisis hasil detail</p>
+     </div>
+     <div id="feature-7" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       ♾️
+      </div>
+      <h3 class="text-lg font-bold mb-2">Akses Selamanya</h3>
+      <p class="text-sm opacity-80">Garansi 2 tahun akses soal</p>
+     </div>
+     <div id="feature-8" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       🏆
+      </div>
+      <h3 class="text-lg font-bold mb-2">Puluhan TO</h3>
+      <p class="text-sm opacity-80">Sudah handle banyak try out</p>
+     </div>
+     <div id="feature-9" class="p-5 rounded-xl card-hover">
+      <div class="text-3xl mb-3">
+       🔒
+      </div>
+      <h3 class="text-lg font-bold mb-2">Aman Terpercaya</h3>
+      <p class="text-sm opacity-80">Data dijamin aman</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- CTA Section -->
+  <section class="py-12 px-6">
+   <div id="cta-box" class="max-w-4xl mx-auto rounded-2xl p-10 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Siap Raih PTN Impianmu?</h2>
+    <p class="text-base md:text-lg mb-6 opacity-90">Daftar sekarang dan mulai persiapan UTBK &amp; SAT terbaikmu!</p><button id="final-cta" class="px-8 py-4 text-lg font-bold rounded-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"> Daftar Sekarang → </button>
+   </div>
+  </section><!-- Footer -->
+  <footer id="kontak" class="py-12 px-6">
+   <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+     <div>
+      <div class="flex items-center space-x-2 mb-4">
+       <div class="text-2xl">
+        🔥
+       </div><span class="text-xl font-bold">TO Lenterago</span>
+      </div>
+      <p id="footer-description" class="opacity-80">Platform try out online terpercaya untuk persiapan UTBK SNBT</p>
+     </div>
+     <div>
+      <h4 class="font-bold mb-4">Menu</h4>
+      <div class="space-y-2">
+       <div>
+        <a href="#beranda" class="opacity-80 hover:opacity-100">Beranda</a>
+       </div>
+       <div>
+        <a href="#tentang" class="opacity-80 hover:opacity-100">Tentang</a>
+       </div>
+       <div>
+        <a href="#fitur" class="opacity-80 hover:opacity-100">Fitur</a>
+       </div>
+      </div>
+     </div>
+     <div>
+      <h4 class="font-bold mb-4">Kontak</h4>
+      <div class="space-y-2 opacity-80">
+       <div>
+        📧 info@lenterago.id
+       </div>
+       <div>
+        🌐 to.lenterago.id
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="text-center pt-8 border-t opacity-60">
+     <p id="footer-text">© 2024 TO Lenterago. All rights reserved.</p>
+    </div>
+   </div>
+  </footer>
+  <script>
+    const defaultConfig = {
+      background_color: "#f8f9ff",
+      surface_color: "#ffffff",
+      text_color: "#1a202c",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#e2e8f0",
+      font_family: "system-ui",
+      font_size: 16,
+      hero_title: "Persiapan TO UTBK & TO SAT Terbaik untuk Masa Depanmu",
+      hero_subtitle: "Platform try out terlengkap dengan sistem CBT profesional. Sudah menangani puluhan TO dengan soal yang dipelajari dari ujian sebenarnya!",
+      cta_button: "Daftar Sekarang →",
+      about_title: "TO Lenterago",
+      about_description: "Platform try out terpercaya dengan sistem CBT profesional dan soal berkualitas dari ujian sebenarnya",
+      features_title: "Fitur Unggulan",
+      footer_text: "© 2024 TO Lenterago. All rights reserved."
+    };
+
+    const config = defaultConfig;
+
+    async function onConfigChange(cfg) {
+      const baseSize = cfg.font_size || defaultConfig.font_size;
+      const customFont = cfg.font_family || defaultConfig.font_family;
+      const baseFontStack = 'system-ui, -apple-system, sans-serif';
+      const fontStack = `${customFont}, ${baseFontStack}`;
+
+      // Apply colors
+      document.body.style.backgroundColor = cfg.background_color || defaultConfig.background_color;
+      document.body.style.color = cfg.text_color || defaultConfig.text_color;
+      document.body.style.fontFamily = fontStack;
+      
+      // Navbar
+      const navbar = document.getElementById('navbar');
+      navbar.style.backgroundColor = cfg.surface_color || defaultConfig.surface_color;
+      navbar.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+      
+      const brandName = document.getElementById('brand-name');
+      brandName.style.color = cfg.text_color || defaultConfig.text_color;
+      brandName.style.fontSize = `${baseSize * 1.5}px`;
+      
+      const navLinks = navbar.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.style.color = cfg.text_color || defaultConfig.text_color;
+        link.style.fontSize = `${baseSize}px`;
+      });
+      
+      const navCta = document.getElementById('nav-cta');
+      navCta.style.backgroundColor = cfg.primary_action_color || defaultConfig.primary_action_color;
+      navCta.style.color = '#ffffff';
+      navCta.style.fontSize = `${baseSize}px`;
+      
+      // Hero section
+      const heroTitle = document.getElementById('hero-title');
+      heroTitle.textContent = cfg.hero_title || defaultConfig.hero_title;
+      heroTitle.style.color = cfg.text_color || defaultConfig.text_color;
+      heroTitle.style.fontSize = `${baseSize * 2.5}px`;
+      
+      const heroSubtitle = document.getElementById('hero-subtitle');
+      heroSubtitle.textContent = cfg.hero_subtitle || defaultConfig.hero_subtitle;
+      heroSubtitle.style.color = cfg.text_color || defaultConfig.text_color;
+      heroSubtitle.style.fontSize = `${baseSize * 1.125}px`;
+      
+      const ctaPrimary = document.getElementById('cta-primary');
+      ctaPrimary.textContent = cfg.cta_button || defaultConfig.cta_button;
+      ctaPrimary.style.backgroundColor = cfg.primary_action_color || defaultConfig.primary_action_color;
+      ctaPrimary.style.color = '#ffffff';
+      ctaPrimary.style.fontSize = `${baseSize * 1.125}px`;
+      
+      const ctaSecondary = document.getElementById('cta-secondary');
+      ctaSecondary.style.backgroundColor = cfg.secondary_action_color || defaultConfig.secondary_action_color;
+      ctaSecondary.style.color = cfg.text_color || defaultConfig.text_color;
+      ctaSecondary.style.fontSize = `${baseSize * 1.125}px`;
+      
+      // Stats cards
+      ['stat-1', 'stat-2', 'stat-3', 'stat-4'].forEach(id => {
+        const stat = document.getElementById(id);
+        stat.style.backgroundColor = cfg.surface_color || defaultConfig.surface_color;
+        const title = stat.querySelector('.text-3xl');
+        const desc = stat.querySelector('.text-sm');
+        if (title) {
+          title.style.color = cfg.text_color || defaultConfig.text_color;
+          title.style.fontSize = `${baseSize * 1.875}px`;
+        }
+        if (desc) {
+          desc.style.color = cfg.text_color || defaultConfig.text_color;
+          desc.style.fontSize = `${baseSize * 0.875}px`;
+        }
+      });
+      
+      // About section
+      const aboutTitle = document.getElementById('about-title');
+      aboutTitle.textContent = `Kenapa Memilih ${cfg.about_title || defaultConfig.about_title}?`;
+      aboutTitle.style.color = cfg.text_color || defaultConfig.text_color;
+      aboutTitle.style.fontSize = `${baseSize * 2}px`;
+      
+      const aboutDesc = document.getElementById('about-description');
+      aboutDesc.textContent = cfg.about_description || defaultConfig.about_description;
+      aboutDesc.style.color = cfg.text_color || defaultConfig.text_color;
+      aboutDesc.style.fontSize = `${baseSize}px`;
+      
+      // Benefit cards
+      ['benefit-1', 'benefit-2', 'benefit-3', 'benefit-4'].forEach(id => {
+        const card = document.getElementById(id);
+        card.style.backgroundColor = cfg.surface_color || defaultConfig.surface_color;
+        const heading = card.querySelector('h3');
+        const para = card.querySelector('p');
+        if (heading) {
+          heading.style.color = cfg.text_color || defaultConfig.text_color;
+          heading.style.fontSize = `${baseSize * 1.25}px`;
+        }
+        if (para) {
+          para.style.color = cfg.text_color || defaultConfig.text_color;
+          para.style.fontSize = `${baseSize}px`;
+        }
+      });
+      
+      // Features section
+      const featuresTitle = document.getElementById('features-title');
+      featuresTitle.textContent = cfg.features_title || defaultConfig.features_title;
+      featuresTitle.style.color = cfg.text_color || defaultConfig.text_color;
+      featuresTitle.style.fontSize = `${baseSize * 2}px`;
+      
+      // Feature cards
+      ['feature-1', 'feature-2', 'feature-3', 'feature-4', 'feature-5', 'feature-6', 'feature-7', 'feature-8', 'feature-9'].forEach(id => {
+        const card = document.getElementById(id);
+        card.style.backgroundColor = cfg.surface_color || defaultConfig.surface_color;
+        const heading = card.querySelector('h3');
+        const para = card.querySelector('p');
+        if (heading) {
+          heading.style.color = cfg.text_color || defaultConfig.text_color;
+          heading.style.fontSize = `${baseSize * 1.125}px`;
+        }
+        if (para) {
+          para.style.color = cfg.text_color || defaultConfig.text_color;
+          para.style.fontSize = `${baseSize * 0.875}px`;
+        }
+      });
+      
+      // CTA Box
+      const ctaBox = document.getElementById('cta-box');
+      ctaBox.style.backgroundColor = cfg.primary_action_color || defaultConfig.primary_action_color;
+      ctaBox.style.color = '#ffffff';
+      const ctaBoxTitle = ctaBox.querySelector('h2');
+      const ctaBoxDesc = ctaBox.querySelector('p');
+      if (ctaBoxTitle) ctaBoxTitle.style.fontSize = `${baseSize * 2}px`;
+      if (ctaBoxDesc) ctaBoxDesc.style.fontSize = `${baseSize}px`;
+      
+      const finalCta = document.getElementById('final-cta');
+      finalCta.style.backgroundColor = '#ffffff';
+      finalCta.style.color = cfg.primary_action_color || defaultConfig.primary_action_color;
+      finalCta.style.fontSize = `${baseSize * 1.25}px`;
+      
+      // Footer
+      const footer = document.querySelector('footer');
+      footer.style.backgroundColor = cfg.surface_color || defaultConfig.surface_color;
+      footer.style.borderTop = `1px solid ${cfg.secondary_action_color || defaultConfig.secondary_action_color}`;
+      
+      const footerText = document.getElementById('footer-text');
+      footerText.textContent = cfg.footer_text || defaultConfig.footer_text;
+      footerText.style.fontSize = `${baseSize * 0.875}px`;
+      
+      const footerHeadings = footer.querySelectorAll('h4');
+      footerHeadings.forEach(h => {
+        h.style.color = cfg.text_color || defaultConfig.text_color;
+        h.style.fontSize = `${baseSize * 1.125}px`;
+      });
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (value) => {
+              cfg.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => cfg.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              cfg.surface_color = value;
+              window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => {
+              cfg.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              cfg.primary_action_color = value;
+              window.elementSdk.setConfig({ primary_action_color: value });
+            }
+          },
+          {
+            get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              cfg.secondary_action_color = value;
+              window.elementSdk.setConfig({ secondary_action_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || defaultConfig.font_family,
+          set: (value) => {
+            cfg.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => cfg.font_size || defaultConfig.font_size,
+          set: (value) => {
+            cfg.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["hero_title", cfg.hero_title || defaultConfig.hero_title],
+        ["hero_subtitle", cfg.hero_subtitle || defaultConfig.hero_subtitle],
+        ["cta_button", cfg.cta_button || defaultConfig.cta_button],
+        ["about_title", cfg.about_title || defaultConfig.about_title],
+        ["about_description", cfg.about_description || defaultConfig.about_description],
+        ["features_title", cfg.features_title || defaultConfig.features_title],
+        ["footer_text", cfg.footer_text || defaultConfig.footer_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Button actions
+    document.getElementById('nav-cta').addEventListener('click', () => {
+      window.open('https://to.lenterago.id', '_blank', 'noopener,noreferrer');
+    });
+
+    document.getElementById('cta-primary').addEventListener('click', () => {
+      window.open('https://to.lenterago.id', '_blank', 'noopener,noreferrer');
+    });
+
+    document.getElementById('final-cta').addEventListener('click', () => {
+      window.open('https://to.lenterago.id', '_blank', 'noopener,noreferrer');
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a7afb5fd1f3cd7c',t:'MTc2NDY4MDE2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

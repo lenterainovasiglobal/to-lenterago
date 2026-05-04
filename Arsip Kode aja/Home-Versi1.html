@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <!--Hanya untuk judul Tab Browser yang dibaca SEO-->
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <!-- CSS khusus halaman Home (tidak mengganggu header/footer atau halaman lain) -->
+  <style>
+    /* Berlaku hanya di file ini karena body pakai class home-page */
+    body.home-page {
+      background: radial-gradient(circle at top left,
+        #f4f7ff 0%,
+        #ffffff 45%,
+        #f1f3f8 100%);
+    }
+
+    /* Hilangkan "kotak besar" default main hanya di halaman ini */
+    body.home-page main {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* Kontainer khusus isi halaman TO */
+    .to-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    /* Sedikit lebih sempit khusus di hero supaya teks & foto tidak terlalu jauh */
+    .to-hero .to-container {
+      max-width: 960px;
+    }
+
+    .to-section {
+      padding: 28px 0;
+    }
+
+    /* ================= HERO ================= */
+    .to-hero {
+      padding: 20px 0 10px; /* dikurangi supaya jarak dari header tidak terlalu tinggi */
+    }
+
+    .to-hero-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .to-hero-left,
+    .to-hero-right {
+      flex: 1;
+    }
+
+    .to-hero-left {
+      text-align: left;
+      padding-right: 24px; /* beri ruang dari foto */
+    }
+
+    .to-hero-right {
+      display: flex;
+      justify-content: center;
+      padding-left: 24px; /* supaya foto tidak terlalu mepet kanan */
+    }
+
+    @media (max-width: 760px) {
+      .to-hero-left {
+        text-align: center;
+        padding-right: 0;
+      }
+      .to-hero-right {
+        padding-left: 0;
+      }
+    }
+
+    .to-pill {
+      display: inline-block;
+      margin: 0 0 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: linear-gradient(
+        90deg,
+        rgba(251, 192, 60, 0.18),
+        rgba(11, 124, 210, 0.12)
+      );
+      border: 1px solid rgba(11, 124, 210, 0.25);
+      border-left: 6px solid #fbc03c;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .to-hero-title {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 40px);
+      color: #0b7cd2;
+    }
+
+    .to-hero-text {
+      margin: 0 auto;
+      color: #334155;
+      max-width: 520px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .to-hero-text a {
+      color: #0b7cd2;
+      text-decoration: underline;
+    }
+
+    /* Kenapa TO Lenterago di dalam hero */
+    .to-hero-left h3 {
+      margin: 18px 0 6px;    /* jarak dari paragraf di atas */
+      color: #0b7cd2;        /* biru */
+      font-size: 16px;
+    }
+
+    .to-hero-left ul {
+      margin: 6px 0 0;
+      padding-left: 20px;
+      max-width: 480px;      /* sedikit lebih sempit agar terasa lebih ke tengah */
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      .to-hero-left ul {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+      }
+    }
+
+    /* Badge jenis TO (SAT, UTBK) – DIBESARKAN */
+    .to-hero-tags {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .to-tag {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #e3f2fd;
+      color: #0b7cd2;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 760px) {
+      .to-hero-tags {
+        justify-content: center;
+      }
+    }
+
+    /* Tombol CTA di hero */
+    .to-hero-ctas {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .to-btn-primary,
+    .to-btn-secondary {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .to-btn-primary {
+      background: linear-gradient(90deg, #0b7cd2, #0a6fbf);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(11, 124, 210, 0.2);
+    }
+
+    .to-btn-primary:hover {
+      text-decoration: none;
+      filter: brightness(1.05);
+    }
+
+    .to-btn-secondary {
+      background: #e3f2fd;
+      color: #0b7cd2;
+      border: 1px solid rgba(11, 124, 210, 0.25);
+    }
+
+    .to-btn-secondary:hover {
+      text-decoration: none;
+      background: #dbeafe;
+    }
+
+    @media (max-width: 760px) {
+      .to-hero-ctas {
+        justify-content: center;
+      }
+    }
+
+    /* Gambar hero */
+    .to-hero-img-wrapper {
+      max-width: 360px;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.16);
+      padding: 18px;
+    }
+
+    .to-hero-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    @media (min-width: 761px) {
+      .to-hero-layout {
+        flex-direction: row;
+        align-items: center;
+      }
+      .to-hero {
+        padding-top: 24px; /* sedikit saja di desktop */
+      }
+    }
+
+    /* ========== JADWAL & BIAYA ========== */
+    .to-section-title {
+      margin: 0 0 12px;
+      color: #0b7cd2;
+      text-align: center;
+      font-size: 22px;
+    }
+
+    .to-section-sub {
+      color: #334155;
+      text-align: center;
+      margin: 0 auto 16px;
+      max-width: 780px;
+      font-size: 14px;
+    }
+
+    .to-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .to-card {
+      background: #ffffff;
+      border: 1px solid #e6eef8;
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 6px 30px rgba(11, 124, 210, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .to-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .to-rows {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0;
+      font-size: 13px;
+    }
+
+    .to-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .to-row span {
+      color: #64748b;
+    }
+
+    .to-card strong {
+      font-weight: 700;
+    }
+
+    .to-cta-mini {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, #0b7cd2, #0a6fbf);
+      margin-top: auto;
+      align-self: center;
+      font-size: 13px;
+    }
+
+    .to-cta-mini:hover {
+      text-decoration: none;
+      filter: brightness(1.05);
+    }
+
+    .to-cards > .to-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(100%, 520px);
+    }
+
+    .to-help {
+      font-size: 13px;
+      color: #64748b;
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 860px) {
+      .to-cards {
+        grid-template-columns: 1fr;
+      }
+      .to-cards > .to-card:last-child:nth-child(odd) {
+        grid-column: auto;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<!-- class home-page supaya override main & background hanya di halaman ini -->
+<body class="home-page">
+
+  <div id="header-placeholder"></div>
+  <!--Mulai Kode Main disini-->
+
+  <main>
+    <!-- HERO HOME -->
+    <section class="to-hero">
+      <div class="to-container">
+        <div class="to-hero-layout">
+          <!-- KIRI: TEKS -->
+          <div class="to-hero-left">
+            <span class="to-pill">Tryout Online Resmi</span>
+
+            <h1 class="to-hero-title">Persiapkan Dirimu untuk Real Test!</h1>
+
+            <p class="to-hero-text">
+              Diselenggarakan oleh <strong>Lenterago</strong> (<em>PT Lentera Inovasi Global</em>). Lenterago menyediakan pembinaan untuk
+              <strong>SAT, SNBT, Bimbingan Reguler, Persiapan Kedinasan, Ujian Mandiri PTN</strong>, dan lainnya.
+              Info detail kunjungi
+              <a href="https://lenterago.id" target="_blank" rel="noopener">lenterago.id</a>.
+            </p>
+
+            <h3>Kenapa TO Lenterago?</h3>
+            <ul>
+              <li>Soal &amp; tata waktu menyerupai ujian asli.</li>
+              <li>Skor &amp; rilis hasil sesuai tanggal yang dijadwalkan.</li>
+              <li>Platform aman &amp; stabil.</li>
+            </ul>
+
+            <!-- Badge jenis TO agar langsung keliatan (DIBESARKAN) -->
+            <div class="to-hero-tags">
+              <span class="to-tag">TO SAT</span>
+              <span class="to-tag">TO UTBK / SNBT</span>
+            </div>
+
+            <!-- Tombol utama -->
+            <div class="to-hero-ctas">
+              <a href="menu_daftar.html" class="to-btn-primary">Daftar Sekarang</a>
+              <a href="#jadwal" class="to-btn-secondary">Cek Jadwal TO Terdekat</a>
+            </div>
+          </div>
+
+          <!-- KANAN: FOTO -->
+          <div class="to-hero-right">
+            <div class="to-hero-img-wrapper">
+              <img
+                src="assets/fotohome.svg"
+                alt="Ilustrasi siswa sedang belajar untuk persiapan tryout"
+                class="to-hero-img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JADWAL & BIAYA -->
+    <section id="jadwal" class="to-section">
+      <div class="to-container">
+        <h2 class="to-section-title">Jadwal &amp; Biaya</h2>
+        <p class="to-section-sub">
+          Pilih paket TO yang ingin diikuti. TO bisa diakses kapan saja selama masa periode pelaksanaan.
+        </p>
+
+        <div class="to-cards" id="cards"></div>
+        <p id="cardsInfo" class="to-help" style="text-align:center; display:none"></p>
+      </div>
+    </section>
+  </main>
+
+  <!--Untuk Nampilin Footer-->
+  <div id="footer-placeholder"></div>
+
+  <!-- Script header & footer (tetap seperti semula) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        });
+
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('footer-placeholder').innerHTML = html;
+        });
+    });
+  </script>
+
+  <!-- Script untuk Jadwal & Biaya (cards dari CSV) -->
+  <script>
+    const cardsEl     = document.getElementById("cards");
+    const cardsInfoEl = document.getElementById("cardsInfo");
+
+    const CSV_URL =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQf4c77CKU9bs4Vl4uXub6LY5mXKf7U6gg2B1TBjfpZuwxGpF0mev6QPnHQeFiaWmwgqCs1wUiyq4jP/pub?gid=43053016&single=true&output=csv";
+
+    function setLoading(msg) {
+      cardsInfoEl.style.display = "block";
+      cardsInfoEl.textContent = msg;
+    }
+    function clearInfo() {
+      cardsInfoEl.style.display = "none";
+      cardsInfoEl.textContent = "";
+    }
+    function escapeHtml(str = "") {
+      return String(str).replace(/[&<>"']/g, (m) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[m]));
+    }
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [], col = "", inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (inQuotes) {
+          if (ch === '"') {
+            if (text[i + 1] === '"') { col += '"'; i++; }
+            else { inQuotes = false; }
+          } else { col += ch; }
+        } else {
+          if (ch === '"') inQuotes = true;
+          else if (ch === ',') { row.push(col); col = ""; }
+          else if (ch === '\n') { row.push(col); rows.push(row); row = []; col = ""; }
+          else if (ch !== '\r') { col += ch; }
+        }
+      }
+      row.push(col);
+      rows.push(row);
+      while (rows.length && rows[rows.length - 1].every(c => String(c).trim() === "")) {
+        rows.pop();
+      }
+      return rows;
+    }
+
+    function toObjects(rows) {
+      if (!rows.length) return [];
+      const headers = rows[0].map(h => String(h).trim().toLowerCase());
+      return rows.slice(1).map(r => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = (r[i] ?? "").toString().trim());
+        return obj;
+      });
+    }
+
+    async function loadEvents() {
+      try {
+        setLoading("Memuat jadwal & biaya…");
+        const res  = await fetch(CSV_URL + "&cb=" + Date.now(), { cache: "no-store" });
+        const text = await res.text();
+        const rows = parseCSV(text);
+        const data = toObjects(rows);
+
+        const actives = data.filter(d => (d.status || "").toLowerCase() === "active");
+
+        cardsEl.innerHTML = "";
+        if (!actives.length) {
+          setLoading("Belum ada event aktif saat ini.");
+        } else {
+          clearInfo();
+          actives.forEach((r) => {
+            const name   = r["event name"] || "";
+            const period = r["periode pelaksanaan"] || "";
+            const hasil  = r["rilis hasil"] || "";
+            const biaya  = r["biaya"] || "";
+            const note   = r["note"]
+              ? `<div class="to-help" style="margin-top:8px; margin-bottom:12px">${escapeHtml(r["note"])}</div>`
+              : "";
+
+            const card = document.createElement("div");
+            card.className = "to-card";
+            card.innerHTML = `
+              <h3>${escapeHtml(name)}</h3>
+              <div class="to-rows">
+                <div class="to-row">
+                  <span>Periode Pelaksanaan</span>
+                  <strong>${escapeHtml(period)}</strong>
+                </div>
+                <div class="to-row">
+                  <span>Rilis Hasil</span>
+                  <strong>${escapeHtml(hasil)}</strong>
+                </div>
+                <div class="to-row">
+                  <span>Biaya</span>
+                  <strong>${escapeHtml(biaya)}</strong>
+                </div>
+              </div>
+              ${note}
+              <a class="to-cta-mini" href="menu_daftar.html" title="Daftar TO ini">Daftar TO ini</a>
+            `;
+            cardsEl.appendChild(card);
+          });
+        }
+
+      } catch (e) {
+        console.error(e);
+        setLoading("Gagal memuat data. Silakan refresh halaman.");
+      }
+    }
+
+    loadEvents();
+  </script>
+</body>
+</html>

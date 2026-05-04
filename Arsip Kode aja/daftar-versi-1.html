@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Hanya untuk judul Tab Browser yang dibaca SEO -->
+  <title>Daftar TO Lenterago</title>
+
+  <!-- CSS global (header, footer, dsb) -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- CSS khusus halaman Daftar -->
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <!-- CSS intl-tel-input -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+
+  <style>
+    /* Berlaku hanya di halaman ini */
+    body.daftar-page {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left,
+        #f4f7ff 0%,
+        #ffffff 45%,
+        #f1f3f8 100%);
+      color: #1b2559;
+    }
+
+    /* Jika di style.css sudah ada .section / .container, ini hanya memperhalus tampilan di halaman daftar */
+    #daftar.section {
+      padding: 32px 16px 40px; /* dulu 60px 16px 70px */
+    }
+
+    #daftar .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .form-wrap {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 10px 16px 24px; /* dulu 28px 20px 32px */
+      box-shadow: 0 18px 45px rgba(15, 35, 95, 0.08);
+      border: 1px solid rgba(15, 35, 95, 0.06);
+    }
+
+    @media (min-width: 768px) {
+      #daftar.section {
+        padding: 0px 16px 48px; /* dulu 72px 16px 90px */
+      }
+
+      .form-wrap {
+        padding: 10px 24px 26px; /* dulu 32px 32px 38px */
+      }
+    }
+
+    .form-wrap h2 {
+      margin-top: 0;
+      margin-bottom: 12px; /* dulu 20px */
+      font-size: 1.4rem;   /* sedikit lebih kecil dari 1.5rem biar padat */
+      font-weight: 700;
+      color: #162447;
+      text-align: center;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;           /* dulu 6px */
+      margin-bottom: 10px;/* dulu 16px */
+    }
+
+    .form-row label {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #243b67;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      font: inherit;
+      padding: 8px 10px;  /* dulu 9px 11px */
+      border-radius: 10px;
+      border: 1px solid #c7d3f3;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      background-color: #fdfdff;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      border-color: #2962ff; /* biru brand */
+      box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.18);
+      background-color: #ffffff;
+    }
+
+    .form-row input::placeholder,
+    .form-row textarea::placeholder {
+      color: #9aa4c4;
+      font-size: 0.88rem;
+    }
+
+    .form-row textarea {
+      min-height: 90px;  /* dulu 110px */
+      resize: vertical;
+      line-height: 1.4;
+    }
+
+    .help {
+      font-size: 0.82rem;
+      color: #5a668b;
+      line-height: 1.5;
+    }
+
+    .help em {
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    button#submitBtn {
+      margin-top: 8px;     /* dulu 10px */
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 16px;   /* dulu 11px 18px */
+      font-size: 0.96rem;  /* sedikit dipadatkan */
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #2962ff, #ff8a00); /* biru ke orange brand */
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(41, 98, 255, 0.32);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    button#submitBtn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(41, 98, 255, 0.35);
+      filter: brightness(1.02);
+    }
+
+    button#submitBtn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 22px rgba(41, 98, 255, 0.28);
+    }
+
+    .status {
+      margin-top: 8px;   /* dulu 12px */
+      font-size: 0.86rem;
+      min-height: 18px;
+    }
+
+    .status.success {
+      color: #137333;
+    }
+
+    .status.error {
+      color: #c5221f;
+    }
+
+    /* Link kecil di bawah form */
+    .form-wrap p.help a {
+      color: #2962ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-wrap p.help a:hover {
+      text-decoration: underline;
+    }
+
+    /* Box info pembayaran di bagian atas form - disamakan dengan style tombol Kirim Pendaftaran */
+    .payment-info {
+      margin-bottom: 30px;
+      width: 100%;
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 0.96rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #2962ff, #ff8a00);
+      color: #ffffff;
+      box-shadow: none;
+      text-align: center;
+    }
+
+    .payment-info strong {
+      color: inherit;
+    }
+
+    /* Samakan lebar input nomor HP dengan input lain */
+    .iti {
+      width: 100%;
+    }
+    .iti input {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="daftar-page">
+
+  <!-- Header akan dimuat dari header.html -->
+  <div id="header-placeholder"></div>
+
+  <!-- Mulai Kode Main di sini -->
+  <main>
+    <!-- Form -->
+    <section id="daftar" class="section">
+      <div class="container form-wrap">
+        <h2>Form Pendaftaran</h2>
+
+        <!-- Info pembayaran di bagian atas form -->
+        <div class="payment-info">
+          <strong>Pembayaran hanya ke rekening resmi:</strong><br>
+          Bank Mandiri<br>
+          No. Rekening: <strong>1030012515330</strong><br>
+          a.n. <strong>LENTERA INOVASI GLOB</strong>
+        </div>
+
+        <form id="applyForm" autocomplete="off" novalidate>
+          <div class="form-row">
+            <label for="nama">Nama Lengkap</label>
+            <input
+              id="nama"
+              type="text"
+              name="entry.1396138807"
+              required
+              placeholder="Nama sesuai identitas"
+              autocomplete="off">
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="entry.321551140"
+              required
+              placeholder="nama@email.com"
+              autocomplete="off">
+          </div>
+
+          <!-- Tanggal lahir (sesuai prefill entry.976979149) -->
+          <div class="form-row">
+            <label for="dob">Tanggal Lahir</label>
+            <input
+              id="dob"
+              type="date"
+              name="entry.976979149"
+              required>
+          </div>
+
+          <div class="form-row">
+            <label for="wa">Nomor WhatsApp</label>
+            <input
+              id="wa"
+              type="tel"
+              name="entry.748072089"
+              required
+              inputmode="tel"
+              autocomplete="off"
+              placeholder="81234567890">
+          </div>
+
+          <div class="form-row">
+            <label for="to">TO yang Diikuti</label>
+            <select id="to" name="entry.1440813157" required>
+              <option value="" disabled selected>Pilih</option>
+              <!-- opsi akan diisi via JavaScript kalau perlu -->
+            </select>
+          </div>
+
+          <!-- Upload Bukti Transfer -->
+          <div class="form-row">
+            <label for="buktiTransfer">Upload Bukti Transfer</label>
+            <input
+              id="buktiTransfer"
+              type="file"
+              accept="image/*,application/pdf"
+              required
+            />
+            <!-- Hidden input untuk kirim LINK ke Google Form (entry id tetap sama) -->
+            <input
+              type="hidden"
+              id="transferUrl"
+              name="entry.1151595007"
+            />
+          </div>
+
+          <div class="help" style="margin-top:-4px">
+            <strong>Catatan:</strong> Hubungi admin melalui Instagram <a href="https://instagram.com/lenterago.id" target="_blank" rel="noopener">@lenterago.id</a> jika mengalami kendala.
+          </div>
+
+          <button type="submit" id="submitBtn">Kirim Pendaftaran</button>
+        </form>
+
+        <div id="statusMsg" class="status"></div>
+
+        <p class="help" style="margin-top:12px">
+          Platform pelaksanaan TO:
+          <a href="https://ujian.lenterago.id" target="_blank" rel="noopener">ujian.lenterago.id</a>.
+          Jika ada kendala, hubungi admin di Instagram <strong>@lenterago.id</strong>.
+        </p>
+      </div>
+    </section>
+  </main>
+  <!-- Akhir Main -->
+
+  <!-- Footer akan dimuat dari footer.html -->
+  <div id="footer-placeholder"></div>
+
+  <!-- JS intl-tel-input -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Muat header
+      fetch('/header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        });
+
+      // Muat footer
+      fetch('/footer.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('footer-placeholder').innerHTML = html;
+        });
+
+      // URL CSV untuk daftar TO aktif
+      const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQf4c77CKU9bs4Vl4uXub6LY5mXKf7U6gg2B1TBjfpZuwxGpF0mev6QPnHQeFiaWmwgqCs1wUiyq4jP/pub?gid=43053016&single=true&output=csv";
+
+      // Endpoint Google Form (pakai ID dari link prefill)
+      const GFORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLScoSGikWQMnNrIrzOGGjRwfGlM26CzoyscQF_JPsqX6EiiMRA/formResponse";
+
+      // Konfigurasi Cloudinary
+      const CLOUD_NAME = "dnmicio2v";
+      const UPLOAD_PRESET = "tes2025";
+
+      const toSelect = document.getElementById('to');
+
+      // Fallback jika fetch CSV gagal / kosong
+      const daftarTOFallback = [
+        'TO UTBK Lenterago #1',
+        'TO UTBK Lenterago #2',
+        'TO PAS Kelas 9',
+        'TO PAT Kelas 12'
+      ];
+
+      function tambahOpsiTO(namaList) {
+        namaList.forEach(nama => {
+          const opt = document.createElement('option');
+          opt.value = nama;
+          opt.textContent = nama;
+          toSelect.appendChild(opt);
+        });
+      }
+
+      // Parser CSV sederhana (handle tanda kutip dan koma di dalam kutip)
+      function parseCSVLine(line) {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+
+          if (char === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              // escape ""
+              current += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (char === ',' && !inQuotes) {
+            result.push(current);
+            current = '';
+          } else {
+            current += char;
+          }
+        }
+
+        result.push(current);
+        return result;
+      }
+
+      function parseCSV(text) {
+        const lines = text.trim().split(/\r?\n/);
+        return lines.map(parseCSVLine);
+      }
+
+      // Ambil TO yang status-nya "active" dari CSV
+      function loadTOFromCSV() {
+        fetch(CSV_URL)
+          .then(resp => {
+            if (!resp.ok) {
+              throw new Error('Gagal mengambil CSV');
+            }
+            return resp.text();
+          })
+          .then(text => {
+            const rows = parseCSV(text);
+            if (!rows.length) {
+              throw new Error('CSV kosong');
+            }
+
+            const header = rows[0].map(h => h.trim().toLowerCase());
+            const idxStatus = header.indexOf('status');
+            const idxEventName = header.indexOf('event name');
+
+            if (idxStatus === -1 || idxEventName === -1) {
+              throw new Error('Kolom status / event name tidak ditemukan');
+            }
+
+            const activeNames = rows
+              .slice(1)
+              .map(cols => cols.map(c => (c || '').trim()))
+              .filter(cols => (cols[idxStatus] || '').toLowerCase() === 'active')
+              .map(cols => cols[idxEventName])
+              .filter(Boolean);
+
+            if (activeNames.length > 0) {
+              tambahOpsiTO(activeNames);
+            } else {
+              // kalau tidak ada yang active, pakai fallback
+              tambahOpsiTO(daftarTOFallback);
+            }
+          })
+          .catch(err => {
+            console.error(err);
+            // kalau error (offline / URL salah), tetap isi opsi supaya user bisa pilih
+            tambahOpsiTO(daftarTOFallback);
+          });
+      }
+
+      loadTOFromCSV();
+
+      // Penanganan submit ke Google Form, dengan upload ke Cloudinary dulu
+      const form = document.getElementById('applyForm');
+      const statusMsg = document.getElementById('statusMsg');
+      const buktiInput = document.getElementById('buktiTransfer');
+      const transferUrlInput = document.getElementById('transferUrl');
+      const submitBtn = document.getElementById('submitBtn');
+      const waInput = document.getElementById('wa');
+
+      // Inisialisasi intl-tel-input untuk nomor WA
+      const iti = window.intlTelInput(waInput, {
+        initialCountry: "id",
+        separateDialCode: true,
+        preferredCountries: ["id", "my", "sg"],
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+      });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // 1) Semua form harus diisi (validasi HTML5)
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        // 2) Validasi nomor HP dengan intl-tel-input
+        if (!iti.isValidNumber()) {
+          statusMsg.textContent = 'Nomor WhatsApp tidak valid. Mohon cek kembali.';
+          statusMsg.className = 'status error';
+          return;
+        }
+
+        // Set nilai input WA ke format internasional penuh (+62812...)
+        const fullNumber = iti.getNumber();
+        waInput.value = fullNumber;
+
+        if (!buktiInput.files || !buktiInput.files[0]) {
+          statusMsg.textContent = 'Silakan upload bukti transfer terlebih dahulu.';
+          statusMsg.className = 'status error';
+          return;
+        }
+
+        statusMsg.textContent = 'Mengupload bukti transfer...';
+        statusMsg.className = 'status';
+        submitBtn.disabled = true;
+
+        try {
+          const file = buktiInput.files[0];
+          const uploadData = new FormData();
+          uploadData.append('file', file);
+          uploadData.append('upload_preset', UPLOAD_PRESET);
+
+          const cloudRes = await fetch(
+            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
+            {
+              method: 'POST',
+              body: uploadData
+            }
+          );
+
+          const cloudJson = await cloudRes.json();
+          if (cloudJson.error) {
+            console.error(cloudJson.error);
+            statusMsg.textContent = 'Gagal upload bukti transfer: ' + (cloudJson.error.message || '');
+            statusMsg.className = 'status error';
+            submitBtn.disabled = false;
+            return;
+          }
+
+          const secureUrl = cloudJson.secure_url;
+          // set LINK ke hidden input yang dipetakan ke entry.1151595007
+          transferUrlInput.value = secureUrl;
+
+          statusMsg.textContent = 'Mengirim data pendaftaran...';
+
+          const formData = new FormData(form);
+
+          await fetch(GFORM_ACTION, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+          });
+
+          // Sama seperti kode sebelumnya: anggap sukses lalu redirect
+          window.location.href = '/sukses.html';
+        } catch (error) {
+          console.error(error);
+          statusMsg.textContent = 'Terjadi kesalahan saat mengirim. Coba lagi ya.';
+          statusMsg.className = 'status error';
+          submitBtn.disabled = false;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

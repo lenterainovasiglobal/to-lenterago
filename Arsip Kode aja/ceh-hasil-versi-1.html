@@ -1,0 +1,720 @@
+<!--Tambahkan di lederboar peringkat x dari X
+terus nama masih salah di leaderboard
+Total untuk RW dan M-->
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <!--Hanya untuk judul Tab Browser yang dibaca SEO-->
+  <title>TO LENTERAGO</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <!-- Style khusus halaman Cek Hasil TO -->
+  <style>
+    /* Root area khusus halaman TO */
+    #to-page-root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      /* background dihapus supaya nyatu dengan background halaman utama */
+      color: #111827;
+      padding: 24px 0;
+    }
+
+    #to-page-root .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    #to-page-root .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    #to-page-root h1,
+    #to-page-root h2,
+    #to-page-root h3 {
+      margin-top: 0;
+    }
+
+    #to-page-root h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #to-page-root h2 {
+      font-size: 1.3rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    #to-page-root p {
+      margin-top: 0.25rem;
+      color: #4b5563;
+    }
+
+    /* FORM LOGIN STYLE (VERTIKAL) */
+    #to-page-root form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      /* dibikin rata tengah */
+      margin: 1rem auto 0;
+      max-width: 360px;
+    }
+
+    #to-page-root label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #374151;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    #to-page-root input[type="email"],
+    #to-page-root input[type="date"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+
+    #to-page-root input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+    }
+
+    #to-page-root button {
+      border: none;
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    #to-page-root .btn-primary {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    #to-page-root .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    #to-page-root .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    #to-page-root .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    #to-page-root .btn-sm {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      border-radius: 999px;
+    }
+
+    #to-page-root .status {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    #to-page-root .status.error {
+      color: #b91c1c;
+    }
+
+    #to-page-root table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    #to-page-root th,
+    #to-page-root td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    #to-page-root th {
+      background: #f9fafb;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #374151;
+    }
+
+    #to-page-root tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    #to-page-root .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    #to-page-root .flex {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #to-page-root .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #to-page-root .mt-1 { margin-top: 0.25rem; }
+    #to-page-root .mt-2 { margin-top: 0.5rem; }
+    #to-page-root .mt-3 { margin-top: 0.75rem; }
+    #to-page-root .mt-4 { margin-top: 1rem; }
+
+    #to-page-root .text-muted { color: #6b7280; }
+
+    #to-page-root .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    #to-page-root .small {
+      font-size: 0.8rem;
+    }
+
+    /* Leaderboard */
+    #to-page-root #leaderboard-section {
+      display: none;
+    }
+
+    #to-page-root .leaderboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #to-page-root .podium {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 16px;
+      margin: 24px 0 16px;
+    }
+
+    #to-page-root .podium-column {
+      flex: 1;
+      max-width: 120px;
+      text-align: center;
+    }
+
+    #to-page-root .podium-bar {
+      position: relative;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #to-page-root .podium-bar span {
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #f9fafb;
+    }
+
+    #to-page-root .podium-bar.gold {
+      background: linear-gradient(180deg, #fef08a, #facc15);
+    }
+
+    #to-page-root .podium-bar.silver {
+      background: linear-gradient(180deg, #e5e7eb, #9ca3af);
+    }
+
+    #to-page-root .podium-bar.bronze {
+      background: linear-gradient(180deg, #fed7aa, #f97316);
+    }
+
+    #to-page-root .podium-rank {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    #to-page-root .podium-name {
+      font-size: 0.8rem;
+      margin-top: 6px;
+      color: #111827;
+      line-height: 1.2;
+      min-height: 2.2em; /* supaya nama tidak nempel ke balok */
+    }
+
+    #to-page-root .podium-score {
+      font-size: 0.8rem;
+      color: #374151;
+    }
+
+    #to-page-root .top10-table th:nth-child(1),
+    #to-page-root .top10-table td:nth-child(1) {
+      width: 60px;
+    }
+
+    #to-page-root .top10-table th:nth-child(3),
+    #to-page-root .top10-table td:nth-child(3) {
+      width: 90px;
+    }
+
+    @media (max-width: 720px) {
+      #to-page-root .podium {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+  <!--Mulai Kode Main disini-->
+
+  <main id="to-page-root">
+  <div class="container">
+    <div class="card">
+      <div style="text-align: center;">
+        <h1>Cek Hasil Try Out</h1>
+        <p>Masukkan email dan tanggal lahir untuk melihat semua nilai TO yang pernah dikerjakan.</p>
+      </div>
+
+        <!-- Form "login" -->
+        <form id="search-form">
+          <div>
+            <label for="email">Email peserta</label>
+            <input type="email" id="email" required placeholder="Ex: nama@lenterago.id" />
+          </div>
+          <div>
+            <label for="dob-date">Tanggal lahir</label>
+            <input type="date" id="dob-date" required />
+            <div class="small text-muted mt-1">
+              Silakan menghubungi admin untuk memperbarui data tanggal lahir terlebih dahulu.
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">
+            Cek data
+          </button>
+        </form>
+
+        <div id="status" class="status mt-2"></div>
+
+        <!-- Bagian nilai siswa -->
+        <section id="student-section" class="mt-3" style="display:none;">
+          <div class="flex-between">
+            <div>
+              <h2>Data Nilai Siswa</h2>
+              <div id="student-info" class="text-muted small"></div>
+            </div>
+            <div id="taken-count" class="tag"></div>
+          </div>
+
+          <div id="results-container" class="mt-2"></div>
+        </section>
+
+        <!-- Bagian leaderboard -->
+        <section id="leaderboard-section" class="mt-3">
+          <div class="leaderboard-header">
+            <div>
+              <h2>Leaderboard TO</h2>
+              <div id="leaderboard-subtitle" class="text-muted small"></div>
+            </div>
+            <div class="flex">
+              <button id="back-to-student" class="btn-secondary btn-sm">
+                ← Kembali ke nilai siswa
+              </button>
+            </div>
+          </div>
+
+          <div id="leaderboard-content" class="mt-3"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // === KONFIGURASI CSV ===
+    const CSV_URL =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSf2auvmjj6uQxhnkavUwY7T60rLnDj2oyp7GGLcZ4QSdBl9GtSYfzezC2-O7Ve4MEoBmBMWCq5yyCP/pub?gid=0&single=true&output=csv";
+
+    const statusEl = document.getElementById("status");
+    const studentSection = document.getElementById("student-section");
+    const leaderboardSection = document.getElementById("leaderboard-section");
+    const resultsContainer = document.getElementById("results-container");
+    const studentInfoEl = document.getElementById("student-info");
+    const takenCountEl = document.getElementById("taken-count");
+    const leaderboardContentEl = document.getElementById("leaderboard-content");
+    const leaderboardSubtitleEl = document.getElementById("leaderboard-subtitle");
+    const backToStudentBtn = document.getElementById("back-to-student");
+
+    let exams = [];    // { code, title, maxScore, leaderboard, colIndex }
+    let students = []; // { email, name, dob, scores: { [code]: number|null } }
+
+    let currentStudent = null;
+
+    // === UTIL CSV PARSER SEDERHANA ===
+    function parseCSV(text) {
+      const rows = text.trim().split(/\r?\n/);
+      return rows.map(row =>
+        row.split(",").map(col => col.trim())
+      );
+    }
+
+    // Normalisasi tanggal dari input date (yyyy-mm-dd -> dd/mm/yyyy)
+    function normalizeDateInput(dobDate) {
+      if (!dobDate) return "";
+      const parts = dobDate.split("-");
+      if (parts.length === 3) {
+        const [y, m, d] = parts;
+        return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
+      }
+      return dobDate;
+    }
+
+    function loadData() {
+      fetch(CSV_URL)
+        .then(res => {
+          if (!res.ok) throw new Error("Gagal mengunduh CSV");
+          return res.text();
+        })
+        .then(text => {
+          const data = parseCSV(text);
+          if (data.length < 4) throw new Error("Format CSV tidak sesuai");
+
+          // Struktur CSV:
+          // 0: header (email, nama, tanggal lahir, kode TO...)
+          // 1: Nama TO (kosong di 3 kolom pertama, lalu nama-nama TO)
+          // 2: max_score
+          // 3: Rank_leaderboard
+          // 4+: peserta
+          const headers = data[0];
+          const nameRow = data[1];
+          const maxRow = data[2];
+          const rankRow = data[3];
+          const rows = data.slice(4);
+
+          // Tentukan daftar ujian (mulai kolom index 3)
+          exams = [];
+          for (let c = 3; c < headers.length; c++) {
+            const code = headers[c];
+            if (!code) continue;
+            const title = nameRow[c] || code;
+            const maxScore = maxRow[c] ? Number(maxRow[c]) : null;
+            const leaderboard = (rankRow[c] || "").toLowerCase() === "yes";
+
+            exams.push({
+              code,
+              title,
+              maxScore,
+              leaderboard,
+              colIndex: c
+            });
+          }
+
+          // Peserta
+          students = rows
+            .filter(r => r[0] || r[1])
+            .map(r => {
+              const email = (r[0] || "").trim();
+              const name = (r[1] || "").trim();
+              const dob = (r[2] || "").trim(); // format di data: dd/mm/yyyy
+              const scores = {};
+
+              exams.forEach(exam => {
+                const raw = r[exam.colIndex] ?? "";
+                const num = raw === "" ? null : Number(raw);
+                scores[exam.code] = isNaN(num) ? null : num;
+              });
+
+              return { email, name, dob, scores };
+            });
+
+          statusEl.textContent = "";
+          statusEl.className = "status";
+        })
+        .catch(err => {
+          console.error(err);
+          statusEl.textContent = "Terjadi kesalahan saat memuat data. Silakan refresh halaman.";
+          statusEl.className = "status error";
+        });
+    }
+
+    function findStudent(email, dobNormalized) {
+      const emailLower = email.trim().toLowerCase();
+      return students.find(
+        s =>
+          s.email.trim().toLowerCase() === emailLower &&
+          s.dob.trim() === dobNormalized
+      );
+    }
+
+    function showStudentScores(student) {
+      currentStudent = student;
+      studentSection.style.display = "block";
+      leaderboardSection.style.display = "none";
+
+      studentInfoEl.textContent = `${student.name} (${student.email}) — Tanggal lahir: ${student.dob}`;
+
+      const rows = [];
+      exams.forEach(exam => {
+        const score = student.scores[exam.code];
+        if (score === null || score === undefined || score === "") return;
+
+        const max = exam.maxScore ?? "-";
+        const percent = exam.maxScore
+          ? ((score / exam.maxScore) * 100).toFixed(1) + "%"
+          : "-";
+
+        rows.push({
+          code: exam.code,
+          title: exam.title,
+          score,
+          max,
+          percent,
+          leaderboard: exam.leaderboard
+        });
+      });
+
+      takenCountEl.textContent = rows.length
+        ? `${rows.length} TO dikerjakan`
+        : "Belum ada nilai TO";
+
+      if (!rows.length) {
+        resultsContainer.innerHTML =
+          '<p class="mt-2 text-muted">Tidak ditemukan nilai TO untuk siswa ini.</p>';
+        return;
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Kode TO</th>
+              <th>Nama TO</th>
+              <th>Nilai</th>
+              <th>Maksimal</th>
+              <th>Persentase</th>
+              <th>Leaderboard</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      rows.forEach(r => {
+        html += `
+          <tr>
+            <td>${r.code}</td>
+            <td>${r.title}</td>
+            <td>${r.score}</td>
+            <td>${r.max}</td>
+            <td>${r.percent}</td>
+            <td>
+              ${
+                r.leaderboard
+                  ? `<button class="btn-secondary btn-sm" onclick="showLeaderboardForExam('${r.code}')">Lihat top 10</button>`
+                  : `<span class="badge">Tidak tersedia</span>`
+              }
+            </td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>`;
+      resultsContainer.innerHTML = html;
+    }
+
+    // Fungsi global untuk dipanggil dari onclick
+    window.showLeaderboardForExam = function (examCode) {
+      const exam = exams.find(e => e.code === examCode);
+      if (!exam) return;
+
+      const participantsWithScore = students
+        .map(s => ({
+          name: s.name || "(tanpa nama)",
+          score: s.scores[examCode]
+        }))
+        .filter(p => p.score !== null && !isNaN(p.score));
+
+      participantsWithScore.sort((a, b) => b.score - a.score);
+
+      const top10 = participantsWithScore.slice(0, 10);
+      leaderboardSubtitleEl.textContent = `Kode TO: ${exam.code} — ${exam.title}`;
+
+      if (!top10.length) {
+        leaderboardContentEl.innerHTML =
+          '<p class="text-muted mt-2">Belum ada data nilai untuk TO ini.</p>';
+      } else {
+        const podium = top10.slice(0, 3);
+
+        const maxScoreInTop = Math.max(...top10.map(p => p.score));
+        const barHeights = podium.map(p => {
+          if (!p) return 0;
+          const base = 60;
+          const extra = 80 * (p.score / maxScoreInTop);
+          return Math.round(base + extra);
+        });
+
+        // PODIUM (2,1,3)
+        let podiumHtml = `<div class="podium">`;
+        const podiumOrder = [1, 0, 2];
+
+        podiumOrder.forEach(idx => {
+          const p = podium[idx];
+          if (!p) {
+            podiumHtml += `<div class="podium-column"></div>`;
+            return;
+          }
+
+          const rankNumber = idx + 1;
+          const height = barHeights[idx];
+          const rankClass =
+            rankNumber === 1
+              ? "gold"
+              : rankNumber === 2
+              ? "silver"
+              : "bronze";
+
+          podiumHtml += `
+            <div class="podium-column">
+              <div class="podium-rank">#${rankNumber}</div>
+              <div class="podium-bar ${rankClass}" style="height:${height}px;">
+                <span>${p.score}</span>
+              </div>
+              <div class="podium-name">${p.name}</div>
+            </div>
+          `;
+        });
+
+        podiumHtml += `</div>`;
+
+        // TABEL TOP 10 (tanpa email)
+        let tableHtml = `
+          <h3>10 Nilai Teratas</h3>
+          <table class="top10-table">
+            <thead>
+              <tr>
+                <th>Peringkat</th>
+                <th>Nama</th>
+                <th>Nilai</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        top10.forEach((p, idx) => {
+          tableHtml += `
+            <tr>
+              <td>${idx + 1}</td>
+              <td>${p.name}</td>
+              <td>${p.score}</td>
+            </tr>
+          `;
+        });
+
+        tableHtml += `</tbody></table>`;
+
+        leaderboardContentEl.innerHTML = podiumHtml + tableHtml;
+      }
+
+      studentSection.style.display = "none";
+      leaderboardSection.style.display = "block";
+    };
+
+    backToStudentBtn.addEventListener("click", () => {
+      leaderboardSection.style.display = "none";
+      studentSection.style.display = "block";
+    });
+
+    // Form submit
+    document.getElementById("search-form").addEventListener("submit", e => {
+      e.preventDefault();
+
+      if (!students.length) {
+        statusEl.textContent = "Data belum siap. Silakan coba beberapa saat lagi.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      const email = document.getElementById("email").value.trim();
+      const dobDate = document.getElementById("dob-date").value;
+
+      if (!email) {
+        statusEl.textContent = "Email tidak boleh kosong.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      if (!dobDate) {
+        statusEl.textContent = "Mohon isi tanggal lahir.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      const dobNorm = normalizeDateInput(dobDate);
+      const student = findStudent(email, dobNorm);
+
+      if (!student) {
+        statusEl.textContent =
+          "Data siswa tidak ditemukan. Cek kembali email dan tanggal lahir.";
+        statusEl.className = "status error";
+        studentSection.style.display = "none";
+        leaderboardSection.style.display = "none";
+      } else {
+        statusEl.textContent = "";
+        statusEl.className = "status";
+        showStudentScores(student);
+      }
+    });
+
+    // Load data saat halaman dibuka
+    loadData();
+  </script>
+
+  <!--Untuk Nampilin Footer-->
+  <div id="footer-placeholder"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('/header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        });
+
+      fetch('/footer.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('footer-placeholder').innerHTML = html;
+        });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lenterago - Template</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --primary: #17bbef; --accent: #ff7f0d; --border: #e2e8f0; }
+    html { overflow-y: scroll; }
+    body { font-family: "Plus Jakarta Sans", sans-serif; background: #f8fafc; color: #1e293b; -webkit-font-smoothing: antialiased; }
+  </style>
+</head>
+
+<body class="p-4 md:p-8">
+  <div id="siteHeader"></div>
+  <main class="max-w-7xl mx-auto pt-[92px]">
+    <!-- KONTEN HALAMAN TARUH DI SINI --> tes 2
+  </main>
+  <div id="siteFooter"></div>
+
+  <script>
+    async function injectPart(id, file) {
+      const el = document.getElementById(id);
+      if(!el) return;
+      try {
+        const res = await fetch(file);
+        if (res.ok) el.innerHTML = await res.text();
+      } catch(e) {}
+    }
+
+    injectPart("siteHeader", "../header.html").then(() => {
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      menuBtn?.addEventListener("click", () => mobileNav.classList.toggle("hidden"));
+    });
+
+    injectPart("siteFooter", "../footer.html");
+  </script>
+</body>
+</html>

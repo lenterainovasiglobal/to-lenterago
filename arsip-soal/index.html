@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arsip Soal – Lenterago</title>
+
+  <link rel="icon" type="image/png" href="assets/favicon.svg">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            primaryBlue: '#0b7cd2',
+            primaryYellow: '#fbc13d',
+            lightBlue: '#eff6ff',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: 0, transform: 'translateY(20px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          },
+          animation: {
+            fadeUp: 'fadeUp 0.5s ease-out forwards',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .tab-active {
+      background-color: white;
+      color: #0b7cd2;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+
+<header class="bg-white/80 backdrop-blur-md shadow-sm fixed top-0 inset-x-0 z-50 transition-all">
+  <div class="max-w-[1376px] mx-auto px-6 h-[70px] flex items-center justify-between">
+    <img src="assets/biru.png" class="h-[40px] hover:opacity-80 transition-opacity" alt="Lenterago">
+
+    <nav class="hidden md:flex gap-10 text-md font-semibold text-slate-600">
+      <a href="/" class="hover:text-primaryBlue transition-colors">Beranda</a>
+      <a href="https://to.lenterago.id/cek-hasil" class="hover:text-primaryBlue transition-colors">Cek Hasil</a>
+      <a href="https://to.lenterago.id/arsip-soal" class="text-primaryBlue transition-colors">Arsip Soal</a>
+    </nav>
+
+    <a href="https://to.lenterago.id/daftar"
+       class="bg-primaryBlue text-white font-bold px-7 py-2.5 rounded-full hover:bg-blue-700 hover:shadow-lg transition-all active:scale-95">
+      Daftar Tryout
+    </a>
+  </div>
+</header>
+
+<a href="https://wa.me/6285190001170"
+   target="_blank"
+   class="fixed right-6 bottom-6 z-[9999] hover:scale-105 transition-transform duration-300">
+  <img src="assets/tanya-admin.png" alt="Tanya Admin" class="w-[220px] md:w-[260px] drop-shadow-xl">
+</a>
+
+<main class="pt-[120px] pb-24 px-6">
+  <div class="max-w-[1000px] mx-auto">
+    
+    <div class="card-glass rounded-[32px] overflow-hidden shadow-2xl shadow-slate-200/50 border border-white">
+      <div class="bg-primaryBlue p-10 text-center text-white">
+        <h1 class="font-extrabold text-3xl md:text-4xl mb-2">Arsip Soal & Pembahasan</h1>
+        <p class="text-blue-100 font-medium">Pelajari kembali soal-soal latihan dari Tryout sebelumnya</p>
+      </div>
+
+      <nav class="bg-slate-100 p-2 flex flex-wrap justify-center gap-2">
+        <button class="to-tab tab-active px-6 py-3 rounded-2xl font-bold text-sm transition-all" data-target="panel-sat">SAT</button>
+        <button class="to-tab px-6 py-3 rounded-2xl font-bold text-sm text-slate-500 hover:text-primaryBlue transition-all" data-target="panel-utbk">UTBK</button>
+        <button class="to-tab px-6 py-3 rounded-2xl font-bold text-sm text-slate-500 hover:text-primaryBlue transition-all" data-target="panel-kfupm">KFUPM</button>
+        <button class="to-tab px-6 py-3 rounded-2xl font-bold text-sm text-slate-500 hover:text-primaryBlue transition-all" data-target="panel-olim">OLIMPIADE</button>
+      </nav>
+
+      <div class="p-8 md:p-12 min-h-[400px]">
+        
+        <section id="panel-sat" class="to-panel animate-fadeUp">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-2 h-8 bg-primaryYellow rounded-full"></div>
+            <h2 class="text-2xl font-extrabold text-slate-800">Try Out SAT</h2>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-10">
+            <div>
+              <h3 class="font-bold text-slate-400 uppercase tracking-widest text-xs mb-4">SAT Math</h3>
+              <ul id="sat-math-list" class="space-y-3"></ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-400 uppercase tracking-widest text-xs mb-4">SAT Reading & Writing</h3>
+              <ul id="sat-eng-list" class="space-y-3"></ul>
+            </div>
+          </div>
+          <p id="sat-empty-message" class="hidden mt-4 text-slate-400 italic">Belum ada arsip tersedia.</p>
+        </section>
+
+        <section id="panel-utbk" class="to-panel hidden animate-fadeUp">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-2 h-8 bg-primaryYellow rounded-full"></div>
+            <h2 class="text-2xl font-extrabold text-slate-800">Try Out UTBK</h2>
+          </div>
+          <ul id="utbk-list" class="space-y-3"></ul>
+          <p id="utbk-empty-message" class="hidden mt-4 text-slate-400 italic">Belum ada arsip tersedia.</p>
+        </section>
+
+        <section id="panel-kfupm" class="to-panel hidden animate-fadeUp">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-2 h-8 bg-primaryYellow rounded-full"></div>
+            <h2 class="text-2xl font-extrabold text-slate-800">MATH KFUPM</h2>
+          </div>
+          <ul id="kfupm-list" class="space-y-3"></ul>
+          <p id="kfupm-empty-message" class="hidden mt-4 text-slate-400 italic">Belum ada arsip tersedia.</p>
+        </section>
+
+        <section id="panel-olim" class="to-panel hidden animate-fadeUp">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-2 h-8 bg-primaryYellow rounded-full"></div>
+            <h2 class="text-2xl font-extrabold text-slate-800">Olimpiade</h2>
+          </div>
+          <ul id="olim-list" class="space-y-3"></ul>
+          <p id="olim-empty-message" class="hidden mt-4 text-slate-400 italic">Belum ada arsip tersedia.</p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-20">
+  <div class="max-w-[1376px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <div>
+      <img src="assets/biru.png" class="w-[180px] mb-6" alt="Lenterago">
+      <p class="text-slate-500">Membantu siswa meraih mimpi masuk kampus impian dengan persiapan matang.</p>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-6 text-slate-800">Program</h3>
+      <ul class="space-y-3 text-slate-600">
+        <li><a href="#" class="hover:text-primaryBlue transition-colors">Bimbel Reguler</a></li>
+        <li><a href="#" class="hover:text-primaryBlue transition-colors">Bimbel SAT</a></li>
+        <li><a href="#" class="hover:text-primaryBlue transition-colors">Tryout Online</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-6 text-slate-800">Layanan</h3>
+      <ul class="space-y-3 text-slate-600">
+        <li><a href="#" class="hover:text-primaryBlue transition-colors">Konsultasi Gratis</a></li>
+        <li><a href="#" class="hover:text-primaryBlue transition-colors">Kelas Online</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-6 text-slate-800">Hubungi Kami</h3>
+      <ul class="space-y-4 text-slate-600">
+        <li class="flex items-center gap-3">
+          <span class="bg-blue-50 p-2 rounded-lg text-primaryBlue"><i class="ph ph-phone"></i></span> 
+          0851-9000-1170
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="bg-blue-50 p-2 rounded-lg text-primaryBlue"><i class="ph ph-envelope"></i></span> 
+          office@lenterago.id
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<div class="bg-primaryBlue py-6 text-center text-blue-50/90 text-sm">
+  © 2026 <span class="text-white font-semibold">Lenterago</span>. Semua hak cipta dilindungi.
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // 1. Tab Logic
+    const tabs = document.querySelectorAll('.to-tab');
+    const panels = document.querySelectorAll('.to-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.target;
+        
+        // Update tab style
+        tabs.forEach(t => {
+          t.classList.remove('tab-active', 'bg-white', 'text-primaryBlue', 'shadow-sm');
+          t.classList.add('text-slate-500');
+        });
+        tab.classList.add('tab-active');
+        tab.classList.remove('text-slate-500');
+
+        // Toggle panel
+        panels.forEach(p => {
+          if (p.id === target) {
+            p.classList.remove('hidden');
+          } else {
+            p.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // 2. Data Fetching
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN5eYfU1NGabNOuhiW7AIwI3GVwY54F2Hw9yJ9GAOSc9-lyo0GOQYRjEUrxMePR8BqaxnKJTzJLIpz/pub?gid=1222535549&single=true&output=csv';
+
+    function addItem(listId, name, link) {
+      const listEl = document.getElementById(listId);
+      if (!listEl) return;
+      
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <a href="${link}" target="_blank" 
+           class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl hover:border-primaryBlue hover:shadow-md transition-all group">
+          <span class="font-semibold text-slate-700 group-hover:text-primaryBlue">${name}</span>
+          <i class="ph ph-arrow-square-out text-xl text-slate-300 group-hover:text-primaryBlue"></i>
+        </a>
+      `;
+      listEl.appendChild(li);
+    }
+
+    fetch(CSV_URL).then(res => res.text()).then(text => {
+      // Basic CSV Split (Header Row Ignored)
+      const lines = text.split('\n').slice(1);
+      
+      lines.forEach(line => {
+        // Simple comma split (assuming no commas in names)
+        const cols = line.split(',');
+        if (cols.length < 3) return;
+
+        const jenis = cols[0].trim().toUpperCase();
+        const nama = cols[1].trim();
+        const link = cols[2].trim();
+
+        if (!link) return;
+
+        if (jenis.startsWith('UTBK')) addItem('utbk-list', nama, link);
+        else if (jenis.includes('SAT-MATH')) addItem('sat-math-list', nama, link);
+        else if (jenis.includes('SAT-ENG')) addItem('sat-eng-list', nama, link);
+        else if (jenis.includes('KFUPM')) addItem('kfupm-list', nama, link);
+        else if (jenis.includes('OLIM')) addItem('olim-list', nama, link);
+      });
+
+      // Show empty state if no children
+      ['utbk', 'kfupm', 'olim'].forEach(id => {
+        const list = document.getElementById(`${id}-list`);
+        if (list && list.children.length === 0) document.getElementById(`${id}-empty-message`).classList.remove('hidden');
+      });
+      
+      const satTotal = document.getElementById('sat-math-list').children.length + document.getElementById('sat-eng-list').children.length;
+      if (satTotal === 0) document.getElementById('sat-empty-message').classList.remove('hidden');
+
+    });
+  });
+</script>
+
+</body>
+</html>

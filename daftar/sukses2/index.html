@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pendaftaran Berhasil — Lenterago</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: "Plus Jakarta Sans", sans-serif; background: #f8fafc; color: #0f172a; }
+    .btn-primary { background: #17bbef; color: #fff; padding: 14px 24px; border-radius: 12px; font-weight: 800; transition: 0.2s; }
+    .btn-primary:hover { filter: brightness(0.95); transform: translateY(-1px); }
+    .fade-up { opacity: 0; transform: translateY(12px); transition: all 0.65s ease; }
+    .fade-up.show { opacity: 1; transform: translateY(0); }
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+    .modal-content { background-color: #fff; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 12px; text-align: center; }
+    .modal-content p { color: #dc2626; font-weight: 600; margin-bottom: 20px; }
+    .btn-oke { background: #dc2626; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .btn-oke:hover { background: #b91c1c; }
+  </style>
+</head>
+<body class="bg-white">
+  <div id="siteHeader"></div>
+
+  <main class="min-h-[80vh] flex items-center justify-center p-6 pt-[120px] pb-[60px]">
+    <div class="max-w-md w-full text-center fade-up">
+      <div class="text-[#17bbef] mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+
+      <h1 class="text-3xl font-extrabold mb-4">Pendaftaran TO Berhasil!</h1>
+      <p class="text-slate-500 text-base mb-8 leading-relaxed">
+        Data kamu sudah kami terima. Admin akan memverifikasi pembayaran dan menghubungi via WhatsApp untuk akses Try Out.
+      </p>
+
+      <div class="flex flex-col gap-4">
+        <a href="https://chat.whatsapp.com/G5yC5GP4eQOK6ImEr6AxKe?mode=gi_t" target="_blank" rel="noopener noreferrer" class="btn-primary justify-center flex items-center gap-2">
+          Gabung Grup TO APRIL 2026
+        </a>
+        <a href="/" class="text-sm font-bold text-slate-400 hover:text-[#17bbef] transition-colors">
+          Kembali ke Beranda          gh auth login
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <div id="warningModal" class="modal">
+    <div class="modal-content">
+      <h2 style="color: #dc2626; font-weight: 800; margin-bottom: 16px;">Peringatan Penting</h2>
+      <p>
+        Periode pengerjaan Try Out adalah dari tanggal 25 April hingga 3 Mei 2026. Jika Anda tidak menyelesaikan Try Out dalam periode tersebut, akses akan hangus dan tidak dapat diakses lagi. Untuk penjadwalan ulang (reschedule), dikenakan biaya tambahan sebesar Rp75.000.<br><br>
+        Jika terdapat kesalahan dalam data pendaftaran, segera hubungi Admin TO di nomor 0851-1122-1170 dalam waktu maksimal 24 jam setelah pendaftaran.
+      </p>
+      <button class="btn-oke" onclick="closeModal()">Oke</button>
+    </div>
+  </div>
+
+  <div id="siteFooter"></div>
+
+  <script>
+    async function injectPart(id, file) {
+      try { const el = document.getElementById(id); const res = await fetch(file); if (res.ok) el.innerHTML = await res.text(); } catch (e) {}
+    }
+    // Naik 2 level
+    injectPart("siteHeader", "../../header.html");
+    injectPart("siteFooter", "../../footer.html");
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => document.querySelectorAll(".fade-up").forEach(el => el.classList.add("show")), 100);
+      // Show modal on load
+      document.getElementById('warningModal').style.display = 'block';
+    });
+
+    function closeModal() {
+      document.getElementById('warningModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>git push origin main

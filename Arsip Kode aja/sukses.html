@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <!--Hanya untuk judul Tab Browser yang dibaca SEO-->
+  <title>TO LENTERAGO</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- CSS KHUSUS HALAMAN SUKSES (tidak mengganggu header/footer) -->
+  <style>
+    .success-page {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      color: #1f2937;
+      background: #f9fbff;
+    }
+
+    /* Strip promo atas */
+    .success-page .strip {
+      background: linear-gradient(
+        90deg,
+        rgba(251, 192, 60, 0.18),
+        rgba(11, 124, 210, 0.12)
+      );
+      border-bottom: 1px solid rgba(11, 124, 210, 0.25);
+    }
+
+    .success-page .strip .inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      text-align: center;
+      color: #334155;
+      font-size: 14px;
+    }
+
+    .success-page .strip strong {
+      color: #1f2937;
+    }
+
+    /* Layout utama */
+    .success-page .success {
+      padding: 34px 0 28px;
+    }
+
+    .success-page .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Kartu sukses */
+    .success-page .card {
+      background: #ffffff;
+      border: 1px solid #e6eef8;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 14px 60px rgba(11, 124, 210, 0.1);
+    }
+
+    .success-page .center {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    /* Icon checklist */
+    .success-page .check {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(22, 163, 74, 0.12);
+      border: 2px solid rgba(22, 163, 74, 0.25);
+      margin: 4px auto 2px;
+    }
+
+    .success-page .check svg {
+      width: 40px;
+      height: 40px;
+      color: #16a34a;
+    }
+
+    /* Typo */
+    .success-page h1 {
+      margin: 6px 0 8px;
+      color: #0b7cd2;
+      font-size: 26px;
+    }
+
+    .success-page .lead {
+      color: #334155;
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .success-page .note-platform {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 10px;
+    }
+
+    /* Link & tombol hanya di dalam success-page */
+    .success-page a {
+      color: #0b7cd2;
+      text-decoration: none;
+    }
+
+    .success-page a:hover {
+      text-decoration: underline;
+    }
+
+    .success-page .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .success-page .btn,
+    .success-page .btn-alt {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform 0.08s ease, box-shadow 0.08s ease,
+        background 0.12s ease;
+    }
+
+    .success-page .btn {
+      color: #ffffff;
+      background: linear-gradient(90deg, #0b7cd2, #0a6fbf);
+      box-shadow: 0 8px 24px rgba(11, 124, 210, 0.35);
+    }
+
+    .success-page .btn-alt {
+      color: #0b7cd2;
+      background: #eaf4ff;
+      border: 1px solid #e6eef8;
+    }
+
+    /* Hover states */
+    .success-page .btn:hover,
+    .success-page .btn-alt:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+    }
+
+    /* Responsif */
+    @media (max-width: 640px) {
+      .success-page .container {
+        padding: 16px;
+      }
+
+      .success-page .card {
+        padding: 18px 16px;
+      }
+
+      .success-page h1 {
+        font-size: 22px;
+      }
+
+      .success-page .lead {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+  <!--Mulai Kode Main disini-->
+
+  <div class="success-page">
+    <div class="strip">
+      <div class="inner">
+        <strong>Pelajari les SAT, UTBK, Olimpiade, IELTS, dll di Lenterago?</strong>
+        Kunjungi <a href="https://www.lenterago.id" title="Lenterago">www.lenterago.id</a>
+      </div>
+    </div>
+
+    <main class="success">
+      <div class="container">
+        <div class="card center">
+          <div class="check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M20 7L9 18l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h1>Pendaftaran Terkirim</h1>
+          <p class="lead">
+            Verifikasi pembayaran akan diproses, dan akun/password akan dikirimkan maks. <strong>2 hari kerja</strong>.<br>
+            Jika sampai <strong>2 hari kerja</strong> belum menerima akun, hubungi admin Instagram <strong>@lenterago.id</strong>.
+          </p>
+          <div class="cta-row">
+            <a class="btn-alt" href="https://www.lenterago.id" title="Kembali ke Beranda">← Beranda</a>
+            <a class="btn" href="/daftar" title="Daftar TO lainnya">Daftar TO lainnya →</a>
+          </div>
+          <p class="lead note-platform">
+            Platform ujian: <a href="https://ujian.lenterago.id" rel="noopener">ujian.lenterago.id</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!--Untuk Nampilin Footer-->
+  <div id="footer-placeholder"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        });
+
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('footer-placeholder').innerHTML = html;
+        });
+    });
+  </script>
+</body>
+</html>

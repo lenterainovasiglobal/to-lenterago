@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Data</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+
+  <style>
+    /* --- RESET & GLOBAL STYLES --- */
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --border-color: #d1d5db;
+      --border-focus: #2563eb;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 72px 0 0 0; /* untuk header fixed */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- LAYOUT CONTAINER --- */
+    main {
+      width: 100%;
+      max-width: 500px;
+      margin: 0rem auto;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      box-sizing: border-box;
+    }
+
+    /* --- TYPOGRAPHY --- */
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+      color: #111827;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 0;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    /* --- FORM ELEMENTS --- */
+    form .field {
+      margin-bottom: 1rem;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    /* --- KHUSUS INTL-TEL-INPUT FIX --- */
+    .iti {
+      width: 100%;
+      display: block;
+    }
+    
+    .iti__flag-container {
+      border-radius: 8px 0 0 8px;
+    }
+    
+    /* --- HELPER TEXT --- */
+    .note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      line-height: 1.4;
+    }
+    
+    code {
+      background: #e5e7eb;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85em;
+    }
+
+    /* --- BUTTON --- */
+    button[type="submit"],
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      padding: 0.8rem;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      margin-top: 0.75rem;
+    }
+
+    button[type="submit"]:hover,
+    .btn-secondary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button[type="submit"]:active,
+    .btn-secondary:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* --- SUCCESS STATE --- */
+    #success-state {
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+
+    #success-state h1 {
+      margin-bottom: 0.5rem;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 600px) {
+      main {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <div id="form-wrapper">
+      <h1>Update Data Siswa</h1>
+      <p class="subtitle">Email dan nomor HP harus sesuai untuk auto update</p>
+      
+      <!-- PENTING: name pakai entry.xxx seperti di prefill -->
+      <form id="toForm" novalidate autocomplete="off">
+        <div class="field">
+          <label for="nama">Nama Lengkap</label>
+          <input
+            type="text"
+            id="nama"
+            name="entry.1705013401"
+            required
+            autocomplete="off"
+            placeholder="Isi dengan Nama Lengkap"
+          />
+        </div>
+
+        <div class="field">
+          <label for="email">Alamat Email</label>
+          <input
+            type="email"
+            id="email"
+            name="entry.1790669296"
+            required
+            autocomplete="off"
+            placeholder="contoh@email.com"
+          />
+        </div>
+
+        <div class="field">
+          <label for="phone">Nomor WhatsApp / HP</label>
+          <input
+            type="tel"
+            id="phone"
+            name="entry.500875685"
+            required
+            inputmode="tel"
+            autocomplete="off"
+          />
+          <div class="note">
+            Menggunakan format internasional.
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="tanggal">Tanggal Lahir</label>
+          <input
+            type="date"
+            id="tanggal"
+            name="entry.429068024"
+            required
+          />
+        </div>
+
+        <button type="submit" id="submitBtn">Kirim Data</button>
+      </form>
+    </div>
+
+    <div id="success-state" style="display: none;">
+      <h1>Data Berhasil Dikirim</h1>
+      <p class="subtitle">Terima kasih, data Anda sudah kami terima.</p>
+      <button type="button" class="btn-secondary" onclick="window.location.href='/'">
+        Kembali ke Beranda
+      </button>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    // load header & footer (sama seperti sebelumnya)
+    document.addEventListener('DOMContentLoaded', function () {
+      const loadComponent = (url, elementId) => {
+        fetch(url)
+          .then(res => res.text())
+          .then(html => document.getElementById(elementId).innerHTML = html)
+          .catch(err => console.error('Gagal memuat komponen:', err));
+      };
+
+      loadComponent('/header.html', 'header-placeholder');
+      loadComponent('/footer.html', 'footer-placeholder');
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // === KONFIG SAMA PERSIS CARA KERJA DENGAN KODE YANG SUDAH BERHASIL ===
+
+      // Endpoint Google Form: pakai ID dari prefill yang kamu kasih
+      const GFORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLScyg2GIIUd4vRRmRKlxgXSo7LNkjS36CZ4vGjRoccuzMZjZiQ/formResponse";
+
+      const form = document.getElementById("toForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const formWrapper = document.getElementById("form-wrapper");
+      const successState = document.getElementById("success-state");
+      const phoneInput = document.getElementById("phone");
+
+      // Inisialisasi intl-tel-input (mirip cara di form TO)
+      const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "id",
+        separateDialCode: true,
+        preferredCountries: ["id", "my", "sg"],
+        nationalMode: false,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+      });
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        // 1) Validasi HTML5
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        // 2) Validasi nomor HP via intl-tel-input
+        if (!iti.isValidNumber()) {
+          alert("Nomor HP tidak valid. Harap periksa kembali.");
+          phoneInput.focus();
+          return;
+        }
+
+        // Set nilai input telepon ke format internasional penuh (+62812...)
+        const fullNumber = iti.getNumber();
+        phoneInput.value = fullNumber;
+
+        // 3) Efek loading tombol
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sedang Mengirim...";
+
+        try {
+          // 4) Sama seperti kode sukses: pakai FormData(form)
+          const formData = new FormData(form);
+
+          await fetch(GFORM_ACTION, {
+            method: "POST",
+            mode: "no-cors",
+            body: formData
+          });
+
+          // 5) Asumsikan sukses → tampilkan success-state (bukan redirect)
+          formWrapper.style.display = "none";
+          successState.style.display = "block";
+        } catch (err) {
+          console.error("Gagal mengirim ke Google Form:", err);
+          alert("Terjadi kesalahan saat mengirim data. Silakan coba lagi.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Kirim Data";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

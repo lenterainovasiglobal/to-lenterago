@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Pilih Try Out | Lenterago </title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --primary: #17bbef; --accent: #ff7f0d; --border: #e2e8f0; }
+    html { overflow-y: scroll; }
+    body { font-family: "Plus Jakarta Sans", sans-serif; background: #f8fafc; color: #1e293b; -webkit-font-smoothing: antialiased; }
+
+    .box-input { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+    .field { width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-weight: 700; font-size: 13px; }
+    .field:focus { outline: none; border-color: var(--primary); }
+
+    .btn { border-radius: 8px; font-weight: 800; padding: 8px 14px; font-size: 12px; transition: 0.2s; cursor: pointer; }
+    .btn-primary { background: var(--primary); color: #fff; }
+
+    .prog-item { background: #f0fbff; border: 1.5px solid var(--primary); border-radius: 20px; margin-bottom: 16px; overflow: hidden; scroll-margin-top: 150px;}
+    .prog-item.active { border-color: var(--primary); box-shadow: 0 4px 20px rgba(23,187,239,0.12); }
+    .prog-item.active .p-5 { padding: 12px 20px !important; }
+
+    /* --- BAGIAN SCROLL AREA --- */
+    .pkg-grid-scroll, .cat-scroll-area { display: flex; gap: 12px; overflow-x: auto; }
+
+    .pkg-grid-scroll {
+      padding: 4px 16px !important;
+      margin-bottom: 0 !important;
+    }
+    .cat-scroll-area { padding-bottom: 8px; padding-top: 12px; flex-wrap: wrap; }
+
+    .cat-btn { padding: 8px 24px; border-radius: 999px; border: 2px solid var(--border); font-size: 16px; font-weight: 800; background: #fff; white-space: nowrap; transition: 0.2s; color: #475569; }
+    .cat-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 2px 8px rgba(23,187,239,0.25); }
+    .cat-btn:not(.active):hover { border-color: var(--primary); color: var(--primary); }
+
+    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .summary-card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:16px; }
+    .small { font-size:12px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; color:#0ea5e9; }
+
+    /* =========================================
+       PERBAIKAN COMPACT (LAYOUT UTAMA)
+       ========================================= */
+    #programList > div {
+      margin-bottom: 16px !important;
+      margin-top: 0 !important;
+    }
+
+    #programList h2,
+    #programList h3,
+    #programList .text-xl,
+    #programList .text-2xl,
+    #programList .font-bold {
+      margin-bottom: 4px !important;
+      margin-top: 0 !important;
+      padding-bottom: 0 !important;
+      line-height: 1.2 !important;
+    }
+
+    .pkg-card {
+      flex: 0 0 280px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+      margin-top: 0 !important;
+    }
+
+    .pkg-card:hover { border-color: var(--primary); background: #f0fbff; transform: translateY(-2px); }
+
+    .benefit-ui { font-size: 12px; color: #1e293b; margin-bottom: 12px; flex-grow: 1; list-style: none; padding: 0; margin-top: 8px; }
+    .benefit-ui li { display: flex; align-items: flex-start; margin-bottom: 4px; line-height: 1.4; }
+    .benefit-ui li::before { content: "✓"; color: #22c55e; margin-right: 8px; font-weight: 900; flex-shrink: 0; }
+
+    /* =========================================
+       HORIZONTAL SCROLL UX IMPROVEMENTS
+       ========================================= */
+    .hscroll { scrollbar-width: thin; scroll-behavior: smooth; }
+    .hscroll::-webkit-scrollbar { height: 10px; }
+    .hscroll::-webkit-scrollbar-track { background: #eef2f7; border-radius: 999px; }
+    .hscroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+    .hscroll.dragging { cursor: grabbing; user-select: none; }
+
+    .hscroll-wrap { position: relative; }
+    .hscroll-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 6px 16px rgba(15,23,42,.12);
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 30;
+      cursor: pointer;
+    }
+    .hscroll-arrow:hover { filter: brightness(0.98); }
+    .hscroll-arrow.left { left: -10px; }
+    .hscroll-arrow.right { right: -10px; }
+
+    @media (max-width: 640px) {
+      .hscroll-arrow { width: 30px; height: 30px; font-size: 20px; }
+      .hscroll-arrow.left { left: -6px; }
+      .hscroll-arrow.right { right: -6px; }
+    }
+
+    @keyframes bounceClue {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -5px); }
+    }
+    .clue-animate { animation: bounceClue 1.5s infinite ease-in-out; }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+  <div id="siteHeader"></div>
+
+  <main class="max-w-7xl mx-auto pt-[92px]">
+
+    <!-- TOP BAR: Kode Referral, Kode Promo, Rekening Tujuan -->
+    <div class="box-input mb-6 flex flex-col md:flex-row gap-4 md:gap-6 md:items-center border-sky-200">
+      <!-- Kode Referral -->
+      <div class="flex flex-col gap-1 flex-1 min-w-0">
+        <label class="text-[12px] font-black uppercase tracking-widest text-sky-500">Kode Referral</label>
+        <div class="flex gap-2">
+          <input id="ref_in" class="field flex-1" placeholder="Ketik kode..." style="text-transform:uppercase" />
+          <button onclick="applyRef()" class="btn btn-primary whitespace-nowrap">Simpan</button>
+        </div>
+        <p id="ref_msg" class="hidden"></p>
+      </div>
+
+      <div class="hidden md:block w-px bg-slate-200 self-stretch"></div>
+
+      <!-- Kode Promo -->
+      <div class="flex flex-col gap-1 flex-1 min-w-0">
+        <label class="text-[12px] font-black uppercase tracking-widest text-sky-500">Kode Promo</label>
+        <div class="flex gap-2">
+          <input id="pro_in" class="field flex-1" placeholder="Contoh: RMD50" style="text-transform:uppercase" />
+          <button onclick="applyPro()" class="btn btn-primary whitespace-nowrap">Gunakan</button>
+        </div>
+        <p id="pro_msg" class="hidden"></p>
+      </div>
+
+      <div class="hidden md:block w-px bg-slate-200 self-stretch"></div>
+
+      <!-- Rekening Tujuan -->
+      <div class="flex flex-col gap-1 shrink-0">
+        <label class="text-[12px] font-black uppercase tracking-widest text-sky-500">Rekening Tujuan</label>
+        <div class="flex items-center gap-3">
+          <img src="/assets/mandiri.png" alt="Bank Mandiri" class="h-7 w-auto object-contain block" />
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="rekening" class="text-lg font-black text-slate-800 tracking-tight">1030012515330</span>
+              <button class="p-1 bg-slate-50 border border-slate-200 rounded-md hover:bg-sky-50 transition-colors group" onclick="copyRek()" title="Salin">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-slate-400 group-hover:text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </button>
+            </div>
+            <p class="text-[11px] font-bold text-slate-500 uppercase leading-none mt-0.5">LENTERA INOVASI GLOBAL</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRAM LIST (full width) -->
+    <h1 class="text-xl font-extrabold mb-4">Pilih Program Try Out</h1>
+    <div id="programList"></div>
+
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="../assets/discount.js"></script>
+  <script src="../assets/program.js"></script>
+
+  <script>
+    async function injectPart(id, file) {
+      const el = document.getElementById(id);
+      if(!el) return;
+      try {
+        const res = await fetch(file);
+        if (res.ok) el.innerHTML = await res.text();
+      } catch(e) {}
+    }
+
+    injectPart("siteHeader", "../header.html").then(() => {
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      menuBtn?.addEventListener("click", () => mobileNav.classList.toggle("hidden"));
+    });
+
+    injectPart("siteFooter", "../footer.html");
+  </script>
+</body>
+</html>

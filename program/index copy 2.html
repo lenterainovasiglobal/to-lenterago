@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Program Try Out | Lenterago</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            montserrat: ['Montserrat', 'sans-serif'],
+          },
+          colors: {
+            primaryBlue: '#0b7cd2',
+            primaryYellow: '#fbc13d',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: "Plus Jakarta Sans", sans-serif; }
+
+    .prog-card {
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(11,124,210,0.08);
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .prog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(11,124,210,0.16);
+    }
+
+    .prog-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: #e0f0ff;
+      display: block;
+    }
+
+    .prog-card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #e0f0ff 0%, #c7e4ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .benefit-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 36px 24px 36px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
+    .benefit-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .benefit-icon {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+      filter: none;
+    }
+
+    .benefit-icon-placeholder {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .keunggulan-section {
+      background-color: #0b7cd2;
+      background-image: url('/assets/bg-keunggulan.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .tag { display: inline-block; font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px; margin-right: 4px; margin-bottom: 4px; }
+    .tag-sat   { background: #dbeafe; color: #1d4ed8; }
+    .tag-utbk  { background: #fef9c3; color: #854d0e; }
+    .tag-ielts { background: #dcfce7; color: #166534; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+  <div id="siteHeader"></div>
+
+  <main class="pt-[72px]">
+
+    <!-- =========================================
+         KEUNGGULAN SECTION
+         ========================================= -->
+    <section class="py-16 md:py-24 keunggulan-section">
+      <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+          <h2 class="font-extrabold text-3xl md:text-5xl text-white leading-tight">
+            Kenapa harus pilih<br>Try Out <span class="text-primaryYellow">Lenterago?</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="/assets/icon-1.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">📝</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Soal Standar Internasional</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Soal mengacu langsung ke format ujian asli SAT, UTBK SNBT, dan IELTS.</p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="/assets/icon-2.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">💡</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Pembahasan Lengkap</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Tiap soal ada pembahasannya, jelas dan mudah dipahami.</p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="/assets/icon-3.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">📊</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Rapor & Sertifikat Resmi</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Rapor nilai lengkap dan sertifikat resmi langsung setelah selesai TO.</p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="/assets/icon-4.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">🎯</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Rekomendasi Belajar</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Tahu persis materi mana yang perlu dikuasai lebih dalam setelah TO.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================
+         PROGRAM CARDS SECTION
+         ========================================= -->
+    <section class="py-16 md:py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+          <p class="text-primaryBlue font-bold uppercase tracking-widest text-sm mb-2">Pilih Program</p>
+          <h2 class="font-extrabold text-3xl md:text-4xl text-slate-800 mb-3">
+            Program Try Out <span class="text-primaryBlue">Lenterago</span>
+          </h2>
+          <p class="text-slate-500 text-lg max-w-xl mx-auto">
+            Tiga program unggulan dengan soal berkualitas dan analisis hasil yang komprehensif.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <!-- ========= CARD: SAT ========= -->
+          <div class="prog-card">
+            <!-- Ganti src dengan path gambar SAT (rasio 16:9) -->
+            <img src="/assets/prog-sat.png" alt="Program SAT" class="prog-card-img"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="prog-card-img-placeholder" style="display:none;">
+              Gambar Program SAT
+            </div>
+
+            <div class="p-6 flex flex-col flex-1">
+              <div class="mb-3">
+                <span class="tag tag-sat">SAT</span>
+                <span class="tag tag-sat">College Board</span>
+              </div>
+              <h3 class="font-extrabold text-xl text-slate-800 mb-2 leading-snug">
+                Try Out SAT
+              </h3>
+              <p class="text-slate-500 text-sm leading-relaxed mb-4 flex-1">
+                Uji kemampuanmu dengan soal SAT standar College Board. Lengkap dengan skor prediktif, pembahasan, dan rapor resmi untuk persiapan kuliah luar negeri.
+              </p>
+              <ul class="text-sm text-slate-600 space-y-1 mb-6">
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Rapor &amp; Sertifikat Resmi</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Akses Soal Selamanya</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Skor Presisi Standar College Board</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Kunci Jawaban &amp; Pembahasan Lengkap</li>
+              </ul>
+              <a href="/daftar"
+                class="block text-center bg-primaryBlue text-white font-extrabold py-3 rounded-xl hover:bg-blue-700 transition">
+                Daftar Sekarang
+              </a>
+            </div>
+          </div>
+
+
+          <!-- ========= CARD: UTBK ========= -->
+          <div class="prog-card">
+            <!-- Ganti src dengan path gambar UTBK (rasio 16:9) -->
+            <img src="/assets/prog-utbk.png" alt="Program UTBK" class="prog-card-img"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="prog-card-img-placeholder" style="display:none;">
+              Gambar Program UTBK
+            </div>
+
+            <div class="p-6 flex flex-col flex-1">
+              <div class="mb-3">
+                <span class="tag tag-utbk">UTBK</span>
+                <span class="tag tag-utbk">SNBT</span>
+              </div>
+              <h3 class="font-extrabold text-xl text-slate-800 mb-2 leading-snug">
+                Try Out UTBK / SNBT
+              </h3>
+              <p class="text-slate-500 text-sm leading-relaxed mb-4 flex-1">
+                Simulasi UTBK SNBT paling realistis dengan penilaian IRT seperti ujian asli. Latih strategi dan ukur kesiapanmu sebelum hari H.
+              </p>
+              <ul class="text-sm text-slate-600 space-y-1 mb-6">
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Rapor &amp; Sertifikat Resmi</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Akses Soal Selamanya</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Penilaian IRT Seperti Ujian Asli</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Kunci Jawaban &amp; Pembahasan Lengkap</li>
+              </ul>
+              <a href="/daftar"
+                class="block text-center bg-primaryYellow text-primaryBlue font-extrabold py-3 rounded-xl hover:brightness-105 transition">
+                Daftar Sekarang
+              </a>
+            </div>
+          </div>
+
+
+          <!-- ========= CARD: IELTS ========= -->
+          <div class="prog-card">
+            <!-- Ganti src dengan path gambar IELTS (rasio 16:9) -->
+            <img src="/assets/prog-ielts.png" alt="Program IELTS" class="prog-card-img"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="prog-card-img-placeholder" style="display:none;">
+              Gambar Program IELTS
+            </div>
+
+            <div class="p-6 flex flex-col flex-1">
+              <div class="mb-3">
+                <span class="tag tag-ielts">IELTS</span>
+                <span class="tag tag-ielts">Academic</span>
+              </div>
+              <h3 class="font-extrabold text-xl text-slate-800 mb-2 leading-snug">
+                Try Out IELTS
+              </h3>
+              <p class="text-slate-500 text-sm leading-relaxed mb-4 flex-1">
+                Simulasi IELTS Academic lengkap dengan seluruh section: Listening, Reading, Writing, dan Speaking. Dapatkan estimasi band score dan feedback detail.
+              </p>
+              <ul class="text-sm text-slate-600 space-y-1 mb-6">
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Rapor &amp; Sertifikat Resmi</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Akses Soal Selamanya</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Estimasi Band Score Akurat</li>
+                <li class="flex items-start gap-2"><span class="text-green-500 font-black mt-0.5">✓</span> Kunci Jawaban &amp; Pembahasan Lengkap</li>
+              </ul>
+              <a href="/daftar"
+                class="block text-center bg-green-600 text-white font-extrabold py-3 rounded-xl hover:bg-green-700 transition">
+                Daftar Sekarang
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script>
+    async function injectPart(id, file) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      try {
+        const res = await fetch(file);
+        if (res.ok) el.innerHTML = await res.text();
+      } catch(e) {}
+    }
+
+    injectPart("siteHeader", "../header.html").then(() => {
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      menuBtn?.addEventListener("click", () => mobileNav.classList.toggle("hidden"));
+    });
+
+    injectPart("siteFooter", "../footer.html");
+  </script>
+</body>
+</html>

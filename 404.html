@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mengalihkan...</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg" sizes="32x32" href="/assets/favicon.svg" />
+  <link rel="icon" type="image/svg" sizes="16x16" href="/assets/favicon.svg" />
+  
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            color: #333;
+            text-align: center;
+        }
+        .container { padding: 20px; max-width: 500px; }
+        
+        /* Loader Style */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2563eb; /* Warna Biru */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Error Style */
+        .error-content { display: none; }
+        h1 { font-size: 24px; margin-bottom: 10px; }
+        p { margin-bottom: 20px; color: #666; }
+        .btn {
+            text-decoration: none;
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn:hover { background-color: #1d4ed8; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="loading">
+            <div class="loader"></div>
+            <p>Sedang mencari tujuan Anda...</p>
+        </div>
+
+        <div id="not-found" class="error-content">
+            <h1>Halaman Tidak Ditemukan</h1>
+            <p>Maaf, link <b id="link-name"></b> tidak terdaftar atau salah ketik.</p>
+            <a href="/" class="btn">Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script>
+        // LINK CSV ANDA
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQf4c77CKU9bs4Vl4uXub6LY5mXKf7U6gg2B1TBjfpZuwxGpF0mev6QPnHQeFiaWmwgqCs1wUiyq4jP/pub?gid=1095611024&single=true&output=csv';
+
+        async function checkRedirect() {
+            // Ambil path dari URL (contoh: /presensi -> presensi)
+            const path = window.location.pathname.substring(1).toLowerCase();
+            document.getElementById('link-name').innerText = `"${path}"`;
+
+            // Jika path kosong, redirect ke home (safety check)
+            if (!path) {
+                window.location.href = "/";
+                return;
+            }
+
+            try {
+                const response = await fetch(sheetUrl);
+                const text = await response.text();
+                
+                // Parse CSV
+                const rows = text.split('\n');
+                let targetLink = null;
+
+                for (let i = 1; i < rows.length; i++) {
+                    // Memisahkan kolom CSV dengan aman
+                    const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    
+                    if (cols.length >= 2) {
+                        const csvName = cols[0].trim().toLowerCase(); // Kolom Name
+                        const csvLink = cols[1].trim(); // Kolom Actual Link
+
+                        if (csvName === path) {
+                            targetLink = csvLink;
+                            break;
+                        }
+                    }
+                }
+
+                if (targetLink) {
+                    // Jika ketemu, langsung redirect
+                    // Gunakan replace agar user tidak bisa tombol back ke halaman loading ini
+                    window.location.replace(targetLink);
+                } else {
+                    // Jika tidak ketemu, tampilkan error 404
+                    show404();
+                }
+
+            } catch (err) {
+                console.error('Gagal mengambil data sheet', err);
+                show404();
+            }
+        }
+
+        function show404() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('not-found').style.display = 'block';
+        }
+
+        // Jalankan pengecekan
+        checkRedirect();
+    </script>
+</body>
+</html>

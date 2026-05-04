@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cek Hasil Tryout | Lenterago</title>
+
+  <link rel="icon" type="image/png" href="/assets/favicon.svg">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            primaryBlue: '#0b7cd2',
+            primaryYellow: '#fbc13d', 
+            primaryYellowHover: '#eab308',
+            surface: '#f8fafc',
+            inputBg: '#f1f5f9',
+          },
+          boxShadow: {
+            'soft': '0 10px 40px -10px rgba(0, 0, 0, 0.08)',
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease-out forwards',
+            'bounce-slow': 'bounce 2s infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: 0, transform: 'translateY(20px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Reset & Clean Up */
+    body { margin: 0; padding: 0; }
+    #siteHeader { width: 100%; }
+
+    .custom-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    
+    .table-row-hover:hover td { background-color: #f8fafc; }
+    
+    .bg-pattern {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-text {
+      animation: fadeSlideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      opacity: 0; 
+    }
+    .delay-200 { animation-delay: 0.2s; }
+
+    /* Wave Animation */
+    .waves {
+      position: absolute;
+      width: 100%;
+      height: 100px;
+      bottom: 0;
+      left: 0;
+      min-height: 100px;
+      max-height: 150px;
+    }
+    .parallax > use {
+      animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+    }
+    .parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
+    .parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
+    .parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
+    .parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; }
+    @keyframes move-forever {
+      0% { transform: translate3d(-90px,0,0); }
+      100% { transform: translate3d(85px,0,0); }
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-slate-900 min-h-screen flex flex-col font-sans selection:bg-primaryBlue selection:text-white">
+
+  <div id="siteHeader"></div>
+
+  <main class="flex-grow w-full pt-[60px] md:pt-[70px]">
+    
+    <div class="bg-primaryBlue relative pt-16 pb-0 text-center">
+      <div class="absolute inset-0 bg-pattern opacity-30 pointer-events-none"></div>
+      
+      <div class="relative z-10 max-w-5xl mx-auto space-y-3 pb-32">
+        <div class="flex items-center justify-center gap-6 md:gap-8">
+            <img src="/assets/lentera.png" class="hidden md:block w-20 opacity-90 animate-text" style="animation-delay: 0.1s;" alt="Dekorasi Kiri">
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight animate-text drop-shadow-lg">
+              <span class="text-white">Cek Hasil</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primaryYellow to-yellow-200">Tryout</span>
+            </h1>
+            <img src="/assets/lentera.png" class="hidden md:block w-20 opacity-90 animate-text" style="animation-delay: 0.1s;" alt="Dekorasi Kanan">
+        </div>
+        <p class="text-blue-50 text-base md:text-lg font-medium opacity-90 max-w-2xl mx-auto animate-text delay-200 px-6">
+          Pantau perkembangan belajarmu. Lihat nilai, analisis skor, dan peringkat leaderboard secara real-time.
+        </p>
+      </div>
+
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(248,250,252,0.7)" /> 
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(248,250,252,0.5)" /> 
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(248,250,252,0.3)" /> 
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#f8fafc" /> 
+        </g>
+      </svg>
+    </div>
+
+    <div class="max-w-[1000px] mx-auto px-4 sm:px-6 relative z-20 -mt-24 mb-20 space-y-10">
+      <div class="bg-white rounded-[32px] shadow-2xl shadow-blue-900/10 p-8 md:p-12 animate-fade-up border border-slate-100">
+        <form id="search-form" class="max-w-2xl mx-auto space-y-6">
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Email Peserta</label>
+            <div class="relative group">
+              <i class="ph ph-envelope-simple absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-primaryBlue transition-colors"></i>
+              <input type="email" id="email" required placeholder="Contoh: email@domain.com" 
+                     class="w-full pl-12 pr-4 py-4 rounded-xl bg-inputBg border border-transparent focus:bg-white focus:border-primaryBlue focus:ring-4 focus:ring-blue-50 outline-none transition-all font-semibold text-slate-700 placeholder:text-slate-400">
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Tanggal Lahir</label>
+            <div class="relative group">
+              <i class="ph ph-calendar-blank absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-primaryBlue transition-colors"></i>
+              <input type="date" id="dob-date" required 
+                     class="w-full pl-12 pr-4 py-4 rounded-xl bg-inputBg border border-transparent focus:bg-white focus:border-primaryBlue focus:ring-4 focus:ring-blue-50 outline-none transition-all font-semibold text-slate-700 cursor-pointer">
+            </div>
+          </div>
+
+          <button type="submit" 
+                  class="w-full bg-primaryYellow text-slate-900 font-extrabold text-lg py-4 rounded-xl hover:bg-primaryYellowHover hover:shadow-lg hover:shadow-yellow-500/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-4">
+            <i class="ph-bold ph-magnifying-glass"></i>
+            LIHAT HASIL SAYA
+          </button>
+        </form>
+        <div id="status" class="text-center mt-6 min-h-[20px]"></div>
+      </div>
+
+      <div id="student-section" class="hidden space-y-8 animate-fade-up">
+        <div class="bg-white rounded-[24px] p-8 shadow-soft border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="flex items-center gap-6 w-full md:w-auto">
+            <div id="avatar-placeholder" class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-blue-500/30 shrink-0"></div>
+            <div>
+              <h2 id="student-name" class="text-2xl font-extrabold text-slate-800 leading-tight"></h2>
+              <p id="student-email" class="text-slate-500 font-medium"></p>
+              <div class="mt-2 inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                Data Ditemukan
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-4 w-full md:w-auto">
+             <div class="flex-1 md:w-32 bg-slate-50 rounded-2xl p-4 border border-slate-100 text-center">
+                <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total TO</span>
+                <span id="stat-total-to" class="block text-3xl font-black text-slate-800 leading-none">0</span>
+             </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-[24px] shadow-soft border border-slate-100 overflow-hidden">
+          <div class="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-white">
+            <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+              <i class="ph-fill ph-files text-primaryBlue"></i>
+              Riwayat Nilai
+            </h3>
+            <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
+              <span id="count-display">0</span> TO DIKERJAKAN
+            </span>
+          </div>
+          <div id="results-container" class="overflow-x-auto custom-scroll"></div>
+        </div>
+      </div>
+
+      <div id="leaderboard-section" class="hidden animate-fade-up scroll-mt-32">
+        <div class="bg-white rounded-[24px] shadow-2xl border border-slate-100 overflow-hidden relative p-8 md:p-12">
+           <button id="back-to-student" class="mb-8 flex items-center gap-2 text-slate-500 hover:text-primaryBlue font-bold text-xs uppercase tracking-wide transition-colors">
+              <i class="ph-bold ph-arrow-left"></i> Kembali
+           </button>
+           <div class="text-center mb-12">
+              <span class="inline-block px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-[10px] font-black uppercase tracking-wider mb-4">Top Performers</span>
+              <h2 class="text-3xl md:text-4xl font-extrabold text-slate-800">Leaderboard</h2>
+              <p id="leaderboard-subtitle" class="text-slate-500 font-medium mt-2"></p>
+           </div>
+           <div id="leaderboard-content"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script>
+    // 1. DYNAMIC INJECTOR
+    async function injectPart(id, file) {
+      const el = document.getElementById(id);
+      if(!el) return;
+      try {
+        const res = await fetch(file);
+        if (res.ok) el.innerHTML = await res.text();
+      } catch(e) { console.error(e); }
+    }
+
+    injectPart("siteHeader", "../header.html").then(() => {
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      menuBtn?.addEventListener("click", () => mobileNav.classList.toggle("hidden"));
+    });
+
+    injectPart("siteFooter", "../footer.html");
+
+    // 2. DATA & LOGIC (Tetap Sama)
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSf2auvmjj6uQxhnkavUwY7T60rLnDj2oyp7GGLcZ4QSdBl9GtSYfzezC2-O7Ve4MEoBmBMWCq5yyCP/pub?gid=0&single=true&output=csv";
+
+    const el = {
+        status: document.getElementById("status"),
+        studentSection: document.getElementById("student-section"),
+        leaderboardSection: document.getElementById("leaderboard-section"),
+        resultsContainer: document.getElementById("results-container"),
+        studentName: document.getElementById("student-name"),
+        studentEmail: document.getElementById("student-email"),
+        avatar: document.getElementById("avatar-placeholder"),
+        statTotal: document.getElementById("stat-total-to"),
+        countDisplay: document.getElementById("count-display"),
+        leaderboardContent: document.getElementById("leaderboard-content"),
+        leaderboardSubtitle: document.getElementById("leaderboard-subtitle"),
+        backBtn: document.getElementById("back-to-student"),
+        form: document.getElementById("search-form")
+    };
+
+    let exams = [], students = [];
+    const parseCSV = (text) => text.trim().split(/\r?\n/).map(row => row.split(",").map(c => c.trim()));
+    const normalizeDate = (d) => { if(!d) return ""; const [y,m,day] = d.split("-"); return `${day.padStart(2,"0")}/${m.padStart(2,"0")}/${y}`; };
+    const getInitials = (name) => name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase();
+
+    fetch(CSV_URL).then(r => r.text()).then(text => {
+        const data = parseCSV(text);
+        const [headers, nameRow, maxRow, rankRow, ...rows] = data;
+        exams = headers.map((h, i) => {
+            if (i < 3 || !h) return null;
+            return { code: h, title: nameRow[i] || h, maxScore: Number(maxRow[i]) || 0, hasLeaderboard: (rankRow[i] || "").toLowerCase() === "yes", colIndex: i };
+        }).filter(Boolean);
+        students = rows.filter(r => r[0] || r[1]).map(r => ({
+            email: (r[0] || "").toLowerCase(), name: r[1], dob: r[2],
+            scores: exams.reduce((acc, ex) => ({...acc, [ex.code]: r[ex.colIndex] ? Number(r[ex.colIndex]) : null}), {})
+        }));
+    });
+
+    function showStudent(student) {
+        el.studentSection.classList.remove("hidden");
+        el.leaderboardSection.classList.add("hidden");
+        el.studentName.textContent = student.name;
+        el.studentEmail.textContent = student.email;
+        el.avatar.textContent = getInitials(student.name);
+
+        const participatedParents = new Set();
+        exams.forEach(ex => {
+            const score = student.scores[ex.code];
+            if (score === null) return;
+            const baseKey = ex.code.match(/^(\d{5})/) ? ex.code.match(/^(\d{5})/)[1] : ex.code;
+            participatedParents.add(baseKey);
+        });
+        el.statTotal.textContent = participatedParents.size;
+        el.countDisplay.textContent = participatedParents.size;
+
+        const groups = new Map();
+        exams.forEach(ex => {
+            const score = student.scores[ex.code];
+            if (score === null) return;
+            const baseKey = ex.code.match(/^(\d{5})/) ? ex.code.match(/^(\d{5})/)[1] : ex.code;
+            if(!groups.has(baseKey)) groups.set(baseKey, []);
+            let rankStr = "-";
+            if(ex.hasLeaderboard) {
+                const participants = students.map(s => s.scores[ex.code]).filter(s => Number.isFinite(s)).sort((a,b) => b - a);
+                const total = participants.length;
+                if (total > 0 && Number.isFinite(score)) {
+                    const first = participants.indexOf(score);
+                    if (first !== -1) {
+                        const last = participants.lastIndexOf(score);
+                        const bestRank = first + 1;
+                        const worstRank = last + 1;
+                        rankStr = (bestRank === worstRank) ? `${bestRank}/${total}` : `${bestRank}-${worstRank}/${total}`;
+                    }
+                }
+            }
+            groups.get(baseKey).push({ ...ex, score, rankStr });
+        });
+
+        let html = `<table class="w-full text-left border-collapse min-w-[700px]">
+            <thead class="bg-slate-50 border-b border-slate-100">
+                <tr>
+                    <th class="pl-8 py-4 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Kode</th>
+                    <th class="py-4 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Nama Tryout</th>
+                    <th class="py-4 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Nilai</th>
+                    <th class="py-4 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Maks</th>
+                    <th class="py-4 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Rank</th>
+                    <th class="pr-8 py-4 text-right text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50 text-sm">`;
+
+        groups.forEach((items, key) => {
+            const isGrouped = items.some(i => i.code.length > 5);
+            const main = items.find(i => i.code === key) || items[0];
+            html += `
+            <tr class="table-row-hover transition-colors group cursor-pointer" onclick="toggleChild('${key}')">
+                <td class="pl-8 py-5 font-mono font-bold text-primaryBlue">${key}</td>
+                <td class="py-5">
+                    <div class="font-bold text-slate-700 text-base">${main.title}</div>
+                    ${isGrouped ? `<div class="text-[10px] font-bold text-blue-400 mt-1 flex items-center gap-1"><i class="ph-bold ph-caret-down"></i> LIHAT SUB-TEST</div>` : ''}
+                </td>
+                <td class="py-5 font-black text-slate-900 text-lg">${main.score}</td>
+                <td class="py-5 text-slate-400 font-medium">${main.maxScore}</td>
+                <td class="py-5 text-slate-500 font-medium">${main.rankStr !== '-' ? `<span class="inline-flex items-center gap-1.5 bg-yellow-50 text-yellow-700 px-2.5 py-1 rounded-md text-xs font-bold border border-yellow-100"><i class="ph-fill ph-trophy"></i> ${main.rankStr}</span>` : '-'}</td>
+                <td class="pr-8 py-5 text-right">
+                    ${main.hasLeaderboard ? `<button onclick="event.stopPropagation(); showLeaderboard('${main.code}', '${main.title}')" class="text-[10px] font-bold text-white bg-slate-900 hover:bg-primaryBlue px-4 py-2 rounded-lg transition-all shadow-md uppercase tracking-wide">Ranking</button>` : ''}
+                </td>
+            </tr>`;
+            if(isGrouped) {
+                items.forEach(sub => {
+                    if(sub.code === key) return;
+                    html += `
+                    <tr class="hidden bg-slate-50/50 border-l-4 border-slate-200" data-parent="${key}">
+                        <td class="pl-8 py-3 font-mono text-xs text-slate-400">└ ${sub.code}</td>
+                        <td class="py-3 pl-6 text-sm text-slate-600 font-medium">${sub.title}</td>
+                        <td class="py-3 font-bold text-slate-700">${sub.score}</td>
+                        <td class="py-3 text-xs text-slate-400 font-medium">${sub.maxScore}</td>
+                        <td class="py-3 text-xs text-slate-500 font-medium">${sub.rankStr}</td>
+                        <td class="pr-8 text-right">
+                             ${sub.hasLeaderboard ? `<button onclick="showLeaderboard('${sub.code}', '${sub.title}')" class="text-[9px] font-bold text-slate-500 hover:text-primaryBlue border border-slate-200 px-3 py-1 rounded transition-all">RANK</button>` : ''}
+                        </td>
+                    </tr>`;
+                });
+            }
+        });
+        html += `</tbody></table>`;
+        el.resultsContainer.innerHTML = groups.size ? html : `<div class="p-8 text-center text-slate-400 text-sm italic">Belum ada data nilai.</div>`;
+    }
+
+    window.toggleChild = (key) => { document.querySelectorAll(`tr[data-parent="${key}"]`).forEach(el => el.classList.toggle('hidden')); };
+
+    window.showLeaderboard = (code, title) => {
+        el.studentSection.classList.add("hidden");
+        el.leaderboardSection.classList.remove("hidden");
+        el.leaderboardSubtitle.textContent = title;
+        const participants = students.map(s => ({ name: s.name, score: s.scores[code] })).filter(p => Number.isFinite(p.score)).sort((a,b) => b.score - a.score);
+        const total = participants.length;
+        let i = 0;
+        while (i < participants.length) {
+            const score = participants[i].score;
+            let j = i;
+            while (j + 1 < participants.length && participants[j + 1].score === score) j++;
+            const bestRank = i + 1;
+            const worstRank = j + 1;
+            const label = (bestRank === worstRank) ? `${bestRank}/${total}` : `${bestRank}-${worstRank}/${total}`;
+            for (let k = i; k <= j; k++) { participants[k].rankBest = bestRank; participants[k].rankLabel = label; }
+            i = j + 1;
+        }
+        const top3 = participants.slice(0, 3);
+        const rest = participants.slice(3, 10);
+        let html = `<div class="flex items-end justify-center gap-2 md:gap-6 mb-12 mt-8 px-2">`;
+        [1, 0, 2].forEach(idx => {
+            const p = top3[idx]; if(!p) return;
+            let height = p.rankBest === 1 ? 180 : p.rankBest === 2 ? 140 : 110;
+            let color = p.rankBest === 1 ? 'bg-gradient-to-t from-yellow-400 to-yellow-50 text-yellow-800 scale-110 z-10' : p.rankBest === 2 ? 'bg-gradient-to-t from-slate-300 to-white text-slate-600' : 'bg-gradient-to-t from-orange-300 to-orange-50 text-orange-800';
+            html += `<div class="flex flex-col items-center w-1/3 max-w-[120px] text-center"><div class="mb-3 relative"><div class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center font-black text-xs text-slate-400 border">${p.name.substring(0,2)}</div>${p.rankBest === 1 ? '<div class="absolute -top-5 -right-3 text-3xl">👑</div>' : ''}</div><div class="w-full rounded-t-2xl flex flex-col items-center justify-end pb-3 ${color} relative overflow-hidden" style="height: ${height}px"><span class="text-xl md:text-2xl font-black">${p.score}</span><span class="text-[10px] font-bold uppercase opacity-60">Rank ${p.rankLabel}</span></div><div class="mt-3 bg-white px-2 py-2 rounded-xl shadow-sm border text-[10px] md:text-xs font-bold text-slate-700">${p.name}</div></div>`;
+        });
+        html += `</div>`;
+        if(rest.length) {
+            html += `<div class="bg-white rounded-2xl border p-2 space-y-1">`;
+            rest.forEach(p => { html += `<div class="flex items-center justify-between hover:bg-slate-50 px-4 py-3 rounded-xl"><div class="flex items-center gap-4"><span class="w-14 h-6 flex items-center justify-center bg-slate-100 text-slate-500 text-[10px] font-bold rounded-md">#${p.rankLabel}</span><span class="font-bold text-slate-700 text-xs md:text-sm">${p.name}</span></div><span class="font-black text-slate-900 text-sm">${p.score}</span></div>`; });
+            html += `</div>`;
+        }
+        el.leaderboardContent.innerHTML = participants.length ? html : `<div class="text-center text-slate-400 italic">Belum ada data leaderboard.</div>`;
+        el.leaderboardSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    el.backBtn.addEventListener('click', () => { el.leaderboardSection.classList.add("hidden"); el.studentSection.classList.remove("hidden"); el.studentSection.scrollIntoView({ behavior: "smooth", block: "start" }); });
+
+    el.form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const dob = normalizeDate(document.getElementById("dob-date").value);
+        const student = students.find(s => s.email === email && s.dob === dob);
+        el.status.innerHTML = `<div class="animate-pulse text-slate-400 font-bold text-sm">Sedang mencari data...</div>`;
+        setTimeout(() => {
+            if(student) { el.status.innerHTML = ""; showStudent(student); setTimeout(() => el.studentSection.scrollIntoView({ behavior: "smooth", block: "start" }), 100); }
+            else { el.status.innerHTML = `<div class="bg-red-50 text-red-600 px-6 py-4 rounded-2xl font-bold text-sm inline-flex items-center gap-3 border border-red-100 animate-fade-up"><i class="ph-fill ph-warning-circle text-xl"></i> Data tidak ditemukan.</div>`; el.studentSection.classList.add("hidden"); }
+        }, 600);
+    });
+  </script>
+</body>
+</html>

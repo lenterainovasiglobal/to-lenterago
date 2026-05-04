@@ -1,0 +1,74 @@
+<header class="fixed top-0 left-0 w-full z-50 bg-white border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="h-[72px] flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3">
+        <img src="/assets/biru.png" alt="Lenterago Logo" class="h-10 w-auto object-contain" />
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-9">
+        <a href="/" class="text-base font-semibold hover:text-[#0b7cd2] transition">Beranda</a>
+        <a href="/program" class="text-base font-semibold hover:text-[#0b7cd2] transition">Programs</a>
+        <a href="/cek-hasil" class="text-base font-semibold hover:text-[#0b7cd2] transition">Cek Hasil</a>
+        <a href="/soal/" class="text-base font-semibold hover:text-[#0b7cd2] transition">Akses Soal TO</a>
+      </nav>
+
+      <!-- CTA Desktop -->
+      <div class="hidden md:flex items-center gap-3">
+        <a
+          href="https://lenterago.id/daftar"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-4 py-2 rounded-lg font-bold text-[#0b7cd2] hover:bg-slate-100 transition"
+        >
+          Ikut Bimbingan Belajar
+        </a>
+
+        <a
+          href="/daftar"
+          class="px-5 py-2 rounded-lg font-extrabold text-white bg-[#0b7cd2] hover:bg-[#0a6bb8] transition shadow"
+        >
+          Daftar Try Out
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="menuBtn"
+        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-100 transition"
+        aria-label="Toggle Menu"
+      >
+        ☰
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileNav" class="md:hidden hidden pb-4">
+      <div class="flex flex-col gap-3 pt-2">
+        <a href="/" class="py-2 px-3 rounded-lg font-semibold hover:bg-slate-100 transition">Beranda</a>
+        <a href="/program" class="py-2 px-3 rounded-lg font-semibold hover:bg-slate-100 transition">Programs</a>
+        <a href="/cek-hasil" class="py-2 px-3 rounded-lg font-semibold hover:bg-slate-100 transition">Cek Hasil</a>
+        <a href="/soal/" class="py-2 px-3 rounded-lg font-semibold hover:bg-slate-100 transition">Akses Soal TO</a>
+
+        <div class="flex gap-3 pt-2">
+          <a
+            href="https://lenterago.id/daftar"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-1 text-center px-4 py-2 rounded-lg font-extrabold bg-[#fbc13d] hover:bg-[#e5ad2f] transition"
+          >
+            Ikut Bimbingan Belajar
+          </a>
+
+          <a
+            href="/daftar"
+            class="flex-1 text-center px-4 py-2 rounded-lg font-extrabold text-white bg-[#0b7cd2] hover:bg-[#0a6bb8] transition"
+          >
+            Daftar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

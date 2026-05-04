@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Beranda | Lenterago </title>
+    
+  <link rel="icon" type="image/png" href="assets/favicon.svg">
+    
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            montserrat: ['Montserrat', 'sans-serif'],
+          },
+          colors: {
+            primaryBlue: '#0b7cd2',
+            lightBlue: '#1c6ecc',
+            primaryYellow: '#fbc13d',
+            lightPink: '#fff5f5',
+            whatsapp: '#25D366',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: 0, transform: 'translateY(30px) scale(0.95)' },
+              '100%': { opacity: 1, transform: 'translateY(0) scale(1)' }
+            },
+            shimmer: {
+              '100%': { transform: 'translateX(100%)' }
+            },
+            slideDown: {
+              '0%': { opacity: 0, transform: 'translateY(-20px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            },
+            popIn: {
+              '0%': { opacity: 0, transform: 'scale(0.9)' },
+              '100%': { opacity: 1, transform: 'scale(1)' }
+            }
+          },
+          animation: {
+            fadeUp: 'fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            slideDown: 'slideDown 0.3s ease-out forwards',
+            popIn: 'popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .card-glass {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+      
+    .card-glass:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-glow:hover {
+      box-shadow: 0 0 20px rgba(251, 193, 61, 0.6);
+      transform: scale(1.03);
+    }
+
+    .shimmer-wrapper {
+      position: relative;
+      overflow: hidden;
+      background: #e2e8f0;
+      border-radius: 20px;
+    }
+
+    .shimmer-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes float-gentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
+    }
+
+    .animate-float {
+      animation: float-gentle 5s ease-in-out infinite;
+    }
+
+    .benefit-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 36px 24px 36px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+    .benefit-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .benefit-icon {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+    .benefit-icon-placeholder { font-size: 28px; line-height: 1; }
+    .keunggulan-section {
+      background-color: #0b7cd2;
+      background-image: url('assets/bg-keunggulan.png');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+  <div id="siteHeader"></div>
+
+  <main class="pt-[70px] md:pt-[70px]">
+
+    <section class="relative bg-primaryBlue overflow-hidden min-h-[500px] md:min-h-[600px] flex items-center">
+      <img src="images/bg-1.png" class="absolute inset-0 w-full h-full object-cover">
+      <div class="relative max-w-[1376px] mx-auto px-6 py-12 md:py-20 lg:grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-fadeUp text-center lg:text-left">
+          <h1 class="font-extrabold text-4xl md:text-5xl lg:text-7xl leading-tight mb-6 md:mb-8 text-white">
+            Persiapan Tryout <br class="hidden md:block">
+            <span class="text-primaryYellow drop-shadow-sm">UTBK 2026</span> &
+            <span class="text-primaryYellow drop-shadow-sm">SAT</span>
+          </h1>
+          <p class="font-medium text-blue-50 text-lg md:text-xl lg:text-2xl max-w-[580px] mb-8 md:mb-12 leading-relaxed mx-auto lg:mx-0">
+            Platform try out terlengkap dengan sistem <span class="font-bold underline decoration-primaryYellow">CBT profesional</span>. Kerjakan soal-soal berkualitas yang dirancang dari ujian asli.
+          </p>
+          <div class="flex flex-col md:flex-row gap-4 md:gap-6 justify-center lg:justify-start">
+            <a href="https://to.lenterago.id/daftar" class="bg-primaryYellow text-primaryBlue font-extrabold text-lg px-8 py-3 md:px-10 md:py-4 rounded-xl btn-glow transition-all">
+              Daftar Sekarang
+            </a>
+            <a href="https://to.lenterago.id/daftar" id="btn-cek-jadwal" class="bg-white/10 backdrop-blur-sm border-2 border-white text-white font-bold text-lg px-8 py-3 md:px-10 md:py-4 rounded-xl hover:bg-white hover:text-primaryBlue transition-all">
+              Cek Jadwal Tryout
+            </a>
+          </div>
+        </div>
+        <div class="hidden lg:flex justify-end animate-fadeUp animate-float" style="animation-delay: 0.2s">
+          <img src="images/bg--1--1.png" class="w-full max-w-[650px] drop-shadow-2xl">
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-lightPink py-16 md:py-24">
+      <div class="max-w-[1376px] mx-auto px-6">
+        <h2 class="font-extrabold text-3xl md:text-4xl mb-8 md:mb-12 text-center lg:text-left">
+          Bagaimana cara daftar Tryout <span class="text-primaryBlue">Lenterago?</span>
+        </h2>
+        <div class="bg-[#ebe5e5] rounded-3xl p-6 md:p-10 lg:flex gap-12 items-center animate-fadeUp">
+          <img src="images/alur-1.png" alt="Alur Pendaftaran Tryout" class="w-full lg:w-3/4 mb-6 lg:mb-0">
+          <img src="images/alur--1--1.png" alt="Ilustrasi Bingung" class="hidden lg:block w-[260px]">
+        </div>
+      </div>
+    </section>
+
+    <!-- Keunggulan Section -->
+    <section class="pt-16 md:pt-24 pb-10 md:pb-14 keunggulan-section">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="font-extrabold text-3xl md:text-5xl text-white leading-tight">
+            Kenapa harus pilih<br>Try Out <span class="text-primaryYellow">Lenterago?</span>
+          </h2>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="assets/icon-1.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">📝</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Soal Standar Internasional</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Soal mengacu langsung ke format ujian asli SAT, UTBK SNBT, dan IELTS.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="assets/icon-2.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">💡</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Pembahasan Lengkap</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Tiap soal ada pembahasannya, jelas dan mudah dipahami.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="assets/icon-3.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">📊</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Rapor & Sertifikat Resmi</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Rapor nilai lengkap dan sertifikat resmi langsung setelah selesai TO.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon-wrap">
+              <img src="assets/icon-4.png" alt="" class="benefit-icon"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <span class="benefit-icon-placeholder" style="display:none;">🎯</span>
+            </div>
+            <h3 class="font-extrabold text-slate-800 text-base md:text-[17px] mb-2 leading-snug">Rekomendasi Belajar</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Tahu persis materi mana yang perlu dikuasai lebih dalam setelah TO.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /Keunggulan Section -->
+
+    <!-- FAQ Section -->
+    <section class="relative pt-10 md:pt-14 pb-16 md:pb-24 overflow-hidden bg-[#EAF4FF]">
+      <!-- Background image slot (1440x480px PNG, dekorasi bawah) -->
+      <div class="absolute inset-0 w-full h-full bg-no-repeat bg-bottom bg-cover pointer-events-none"
+           style="background-image: url('images/bg-faq.png'); opacity: 1;"></div>
+
+      <div class="relative max-w-[860px] mx-auto px-6">
+        <!-- Heading -->
+        <div class="text-center mb-10 md:mb-14">
+          <h2 class="font-extrabold text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
+            Frequently Asked <span class="text-[#fbc13d]">Question</span>
+          </h2>
+          <div class="h-1.5 w-20 bg-[#fbc13d] mx-auto rounded-full mt-4"></div>
+        </div>
+
+        <!-- FAQ Accordion -->
+        <div class="space-y-3" id="faq-list">
+
+          <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <button class="faq-btn w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 text-base md:text-lg gap-4">
+              <span>Apa itu Lenterago?</span>
+              <svg class="faq-arrow w-5 h-5 text-primaryBlue flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+            </button>
+            <div class="faq-body hidden px-6 pb-5 text-slate-600 text-sm md:text-base leading-relaxed">
+              Lenterago adalah platform tryout online yang menyediakan simulasi ujian UTBK dan SAT berbasis CBT (Computer-Based Test) profesional dengan soal-soal berkualitas.
+            </div>
+          </div>
+
+          <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <button class="faq-btn w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 text-base md:text-lg gap-4">
+              <span>Bagaimana cara mendaftar tryout di Lenterago?</span>
+              <svg class="faq-arrow w-5 h-5 text-primaryBlue flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+            </button>
+            <div class="faq-body hidden px-6 pb-5 text-slate-600 text-sm md:text-base leading-relaxed">
+              Klik tombol "Daftar Sekarang", isi formulir pendaftaran, lakukan pembayaran, lalu akun tryout kamu akan langsung aktif dan siap digunakan.
+            </div>
+          </div>
+
+          <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <button class="faq-btn w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 text-base md:text-lg gap-4">
+              <span>Tryout apa saja yang tersedia di Lenterago?</span>
+              <svg class="faq-arrow w-5 h-5 text-primaryBlue flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+            </button>
+            <div class="faq-body hidden px-6 pb-5 text-slate-600 text-sm md:text-base leading-relaxed">
+              Saat ini tersedia tryout UTBK (Tes Potensi Skolastik & Literasi) dan SAT (Scholastic Assessment Test) dengan soal yang dirancang mengacu pada pola ujian asli.
+            </div>
+          </div>
+
+          <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <button class="faq-btn w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 text-base md:text-lg gap-4">
+              <span>Apakah hasil tryout bisa langsung dilihat?</span>
+              <svg class="faq-arrow w-5 h-5 text-primaryBlue flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+            </button>
+            <div class="faq-body hidden px-6 pb-5 text-slate-600 text-sm md:text-base leading-relaxed">
+              Hasil tryout akan dirilis sesuai jadwal yang tertera di kartu paket masing-masing. Kamu bisa cek hasil dan peringkat melalui menu "Cek Hasil" di website.
+            </div>
+          </div>
+
+          <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <button class="faq-btn w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 text-base md:text-lg gap-4">
+              <span>Berapa biaya untuk mengikuti tryout?</span>
+              <svg class="faq-arrow w-5 h-5 text-primaryBlue flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+            </button>
+            <div class="faq-body hidden px-6 pb-5 text-slate-600 text-sm md:text-base leading-relaxed">
+              Biaya berbeda-beda per event. Cek kartu paket di bagian "Pilih Paket Tryout" untuk harga terbaru. Quota terbatas, jadi segera daftar!
+            </div>
+          </div>
+
+        </div>
+        <!-- /FAQ Accordion -->
+
+      </div>
+    </section>
+    <!-- /FAQ Section -->
+
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script>
+    // 1. INJECTOR (Header & Footer)
+    async function injectPart(id, file) {
+      const el = document.getElementById(id);
+      if(!el) return;
+      try {
+        const res = await fetch(file);
+        if (res.ok) el.innerHTML = await res.text();
+      } catch(e) { console.error("Error loading " + file, e); }
+    }
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const body = item.querySelector('.faq-body');
+        const arrow = btn.querySelector('.faq-arrow');
+        const isOpen = !body.classList.contains('hidden');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.querySelector('.faq-body').classList.add('hidden');
+          i.querySelector('.faq-arrow').style.transform = '';
+        });
+        // Toggle current
+        if (!isOpen) {
+          body.classList.remove('hidden');
+          arrow.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    injectPart("siteHeader", "../header.html").then(() => {
+      // Logic tombol menu mobile dari template baru
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      menuBtn?.addEventListener("click", () => mobileNav.classList.toggle("hidden"));
+    });
+
+    injectPart("siteFooter", "../footer.html");
+
+  </script>
+</body>
+</html>

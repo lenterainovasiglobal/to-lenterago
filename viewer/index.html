@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Lenterago Viewer</title>
+
+  <link rel="icon" type="image/png" href="assets/favicon.svg">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            primaryBlue: '#0b7cd2',
+            primaryHover: '#0969b3',
+            primaryYellow: '#fbc13d',
+            surface: '#f8fafc',
+            border: '#e2e8f0',
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+          },
+          animation: {
+            'spin-fast': 'spin 0.8s linear infinite',
+            'fade-up': 'fadeUp 0.4s ease-out forwards',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: 0, transform: 'translateY(10px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* === SCROLLBAR DIPERBESAR (SESUAI REQUEST) === */
+    ::-webkit-scrollbar { width: 14px; height: 14px; } /* Diperbesar jadi 14px */
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { 
+        background: #94a3b8; 
+        border-radius: 20px; 
+        border: 3px solid #f1f5f9; /* Border agar tidak terlalu nempel */
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    
+    /* PDF Page Wrapper */
+    .page { 
+      position: relative; 
+      margin: 0 auto 16px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 4px; 
+      overflow: hidden; 
+    }
+    canvas { display: block; width: 100%; height: auto; }
+
+    /* === WATERMARK LEBIH JELAS (SESUAI REQUEST) === */
+    .wm { position: absolute; inset: 0; display: none; pointer-events: none; z-index: 50; }
+    .wm.show { display: block; }
+    .wm-grid { 
+        position: absolute; 
+        inset: 0; 
+        display: grid; 
+        place-content: center; 
+        gap: 60px; 
+        transform: rotate(-15deg); 
+        
+        opacity: 0.6; /* Dinaikkan dari 0.35 jadi 0.6 agar lebih jelas */
+    }
+    .wm-cell { 
+        color: #e11d48; 
+        font-weight: 900; /* Lebih tebal */
+        font-size: 14px; 
+        text-align: center; 
+        white-space: pre; 
+        line-height: 1.4; 
+        text-transform: uppercase; 
+        letter-spacing: 1px; 
+    }
+
+    /* Progress Bar */
+    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: #fbc13d; width: 0%; z-index: 100; transition: width 0.2s ease; box-shadow: 0 2px 4px rgba(251, 193, 61, 0.5); }
+    
+    /* Background Pattern */
+    .bg-dots {
+      background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-slate-800 h-screen flex flex-col font-sans overflow-hidden selection:bg-primaryBlue selection:text-white">
+
+  <div class="progress-bar" id="progressBar"></div>
+
+
+  <main id="app" class="hidden flex-1 relative overflow-hidden">
+    <div class="flex h-full w-full">
+      
+      <aside id="sidebarPanel" class="w-full md:w-[360px] bg-white border-r border-border flex flex-col z-30 h-full shadow-soft relative md:flex">
+        
+        <div class="p-4 border-b border-border bg-white z-10">
+          <div id="topbar" class="hidden items-center justify-between mb-3 pb-3 border-b border-slate-100">
+            <div class="flex flex-col">
+              <span id="userLabel" class="text-sm font-bold text-slate-800 truncate max-w-[160px]">User</span>
+              <!-- <div class="flex items-center gap-1.5 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-[10px] font-bold text-primaryBlue uppercase tracking-wider"></span>
+              </div> -->
+            </div>
+            <div class="flex items-center gap-1">
+              <button id="refreshBtn" class="p-2 text-slate-400 hover:text-primaryBlue hover:bg-blue-50 rounded-lg transition-all active:scale-90" title="Sinkronisasi">
+                <i class="ph-bold ph-arrows-clockwise text-base"></i>
+              </button>
+              <button id="logoutBtn" class="flex items-center gap-1.5 text-[11px] font-bold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-all active:scale-95 border border-red-100">
+                <i class="ph-bold ph-sign-out text-sm"></i> Keluar
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-xs font-extrabold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                <i class="ph-fill ph-files"></i> Dokumen Saya
+            </h2>
+            <div class="px-2 py-0.5 bg-blue-50 text-primaryBlue rounded text-[10px] font-bold" id="docCount">0 File</div>
+          </div>
+          <div class="relative group">
+            <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primaryBlue transition-colors"></i>
+            <input id="searchInput" type="text" placeholder="Cari kode..." 
+                   class="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:bg-white focus:border-primaryBlue focus:ring-2 focus:ring-blue-100 outline-none transition-all placeholder:text-slate-400">
+            <button id="clearSearchBtn" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500 transition-colors">
+              <i class="ph-fill ph-x-circle"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="list" class="flex-1 overflow-y-auto custom-scroll p-3 space-y-2 bg-white"></div>
+
+        <div id="listEmpty" class="hidden flex-1 flex flex-col items-center justify-center p-8 text-center opacity-60">
+          <div class="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center mb-3">
+             <i class="ph-duotone ph-folder-dashed text-3xl text-slate-400"></i>
+          </div>
+          <p class="text-sm font-bold text-slate-600">Tidak ada dokumen</p>
+          <p class="text-[11px] text-slate-400 mt-1">Tekan tombol refresh di atas.</p>
+        </div>
+      </aside>
+
+      <section id="viewerPanel" class="hidden md:flex flex-1 flex-col h-full bg-slate-100/50 relative w-full">
+        
+        <div class="h-14 bg-white border-b border-border flex items-center justify-between px-4 shadow-sm sticky top-0 z-20">
+          <div class="flex items-center gap-3">
+            <button id="backToListBtn" class="md:hidden p-2 -ml-2 text-slate-500 hover:bg-slate-100 hover:text-primaryBlue rounded-lg transition-colors">
+                <i class="ph-bold ph-arrow-left text-xl"></i>
+            </button>
+
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primaryBlue to-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <i class="ph-fill ph-file-pdf"></i>
+            </div>
+            <div class="flex flex-col justify-center">
+              <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-0.5">Sedang Membuka</span>
+              <h3 id="currentCodeLabel" class="text-sm font-extrabold text-slate-800 leading-none tracking-tight truncate max-w-[200px]">—</h3>
+            </div>
+          </div>
+
+          <button id="toggleSidebarBtn" class="hidden md:flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-primaryBlue hover:bg-blue-50 px-3 py-2 rounded-lg transition-all border border-slate-200 hover:border-blue-200">
+            <i class="ph-bold ph-sidebar-simple text-base" id="toggleSidebarIcon"></i>
+            <span id="toggleSidebarLabel">Full View</span>
+          </button>
+        </div>
+
+        <div id="viewerScroll" class="flex-1 overflow-y-auto custom-scroll p-3 md:p-8 flex justify-center bg-dots relative w-full">
+          <div id="wmOverlay" class="wm"><div id="wmGrid" class="wm-grid"></div></div>
+
+          <div id="viewer" class="w-full max-w-[900px] min-h-full relative z-10 transition-all duration-300 opacity-0 transform translate-y-4"></div>
+
+          <div id="viewerEmpty" class="absolute inset-0 flex flex-col items-center justify-center text-center z-0 p-6 pointer-events-none">
+            <div class="w-20 h-20 bg-white rounded-[1.5rem] shadow-soft flex items-center justify-center mb-4 animate-fade-up border border-slate-50">
+              <i class="ph-duotone ph-book-open-text text-4xl text-primaryBlue opacity-80"></i>
+            </div>
+            <h3 class="text-lg font-extrabold text-slate-800 mb-1 animate-fade-up">Preview Area</h3>
+            <p class="text-slate-500 text-xs animate-fade-up">Pilih dokumen di menu sebelah.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center bg-white p-4 hidden">
+    <div class="bg-white rounded-[28px] shadow-2xl w-full max-w-lg overflow-hidden animate-fade-up border border-slate-100 relative">
+      
+      <div class="h-32 bg-primaryBlue relative overflow-hidden flex flex-col items-center justify-center text-white">
+         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+         <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-2 shadow-inner border border-white/30">
+            <i class="ph-fill ph-lock-key text-2xl text-white"></i>
+         </div>
+         <h1 class="text-lg font-extrabold tracking-tight">Portal Dokumen Lenterago</h1>
+      </div>
+
+      <div class="p-6">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Email Peserta</label>
+            <div class="relative group">
+              <i class="ph-fill ph-envelope-simple absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-primaryBlue transition-colors"></i>
+              <input id="email" type="email" placeholder="contoh: nama@email.com" 
+                     class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:border-primaryBlue focus:ring-4 focus:ring-blue-50 outline-none transition-all placeholder:font-medium placeholder:text-slate-400">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Tanggal Lahir</label>
+            <div class="relative group">
+              <i class="ph-fill ph-calendar-blank absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-primaryBlue transition-colors"></i>
+              <input id="cert" type="date" 
+                     class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:border-primaryBlue focus:ring-4 focus:ring-blue-50 outline-none transition-all cursor-pointer">
+            </div>
+          </div>
+        </div>
+
+        <div id="err" class="mt-4 min-h-[20px] text-xs font-bold text-red-500 text-center flex items-center justify-center gap-1"></div>
+
+        <button id="loginBtn" class="w-full mt-2 bg-primaryYellow text-slate-900 font-extrabold py-3.5 rounded-xl hover:bg-[#facd60] shadow-lg shadow-yellow-500/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2 group">
+          <span>BUKA AKSES</span>
+          <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        </button>
+        
+        <div class="text-center mt-5 pt-4 border-t border-slate-100">
+            <a href="https://wa.me/6285190001170" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-50 text-primaryBlue px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors">
+                <i class="ph-fill ph-whatsapp-logo text-lg"></i> Tanya Admin (Bantuan)
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="warnModal" class="fixed inset-0 z-[60] flex items-center justify-center bg-white p-4 hidden">
+    <div class="bg-white rounded-[24px] shadow-2xl max-w-sm w-full p-6 animate-fade-up text-center relative border border-slate-100">
+      <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl text-red-500 border border-red-100 shadow-sm">
+          <i class="ph-fill ph-shield-warning"></i>
+      </div>
+      
+      <h2 class="text-xl font-extrabold text-slate-900 mb-2">Dokumen Rahasia</h2>
+      <p class="text-xs text-slate-500 leading-relaxed mb-6 font-medium">
+        Dokumen ini memiliki proteksi <em>digital watermark</em>. Segala bentuk penyebaran atau tangkapan layar akan terlacak.
+      </p>
+      <button id="warnOkBtn" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10 active:scale-95 text-xs">
+        Saya Mengerti & Lanjutkan
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const ROOT = location.pathname.replace(/\/[^/]*$/, ''); 
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSf2auvmjj6uQxhnkavUwY7T60rLnDj2oyp7GGLcZ4QSdBl9GtSYfzezC2-O7Ve4MEoBmBMWCq5yyCP/pub?gid=0&single=true&output=csv";
+    const FILES_INDEX_URL = `${ROOT}/files.json`;
+
+    const els = {
+        modal: document.getElementById('authModal'),
+        app: document.getElementById('app'),
+        viewer: document.getElementById('viewer'),
+        viewerEmpty: document.getElementById('viewerEmpty'),
+        currentCodeLabel: document.getElementById('currentCodeLabel'),
+        emailInput: document.getElementById('email'),
+        certInput: document.getElementById('cert'),
+        loginBtn: document.getElementById('loginBtn'),
+        errDiv: document.getElementById('err'),
+        topbar: document.getElementById('topbar'),
+        userLabel: document.getElementById('userLabel'),
+        logoutBtn: document.getElementById('logoutBtn'),
+        listEl: document.getElementById('list'),
+        listEmpty: document.getElementById('listEmpty'),
+        searchInput: document.getElementById('searchInput'),
+        clearSearchBtn: document.getElementById('clearSearchBtn'),
+        refreshBtn: document.getElementById('refreshBtn'),
+        backToListBtn: document.getElementById('backToListBtn'),
+        toggleSidebarBtn: document.getElementById('toggleSidebarBtn'),
+        wmOverlay: document.getElementById('wmOverlay'),
+        wmGrid: document.getElementById('wmGrid'),
+        progressBar: document.getElementById('progressBar'),
+        warnModal: document.getElementById('warnModal'),
+        warnOkBtn: document.getElementById('warnOkBtn'),
+        docCount: document.getElementById('docCount'),
+        sidebarPanel: document.getElementById('sidebarPanel'), 
+        viewerPanel: document.getElementById('viewerPanel'),
+        viewerScroll: document.getElementById('viewerScroll')
+    };
+
+    let USERS = {}, FILES_MAP = {};
+    let usersLoaded = false, filesLoaded = false;
+    let pdfReady = false;
+    let currentUserEmail = null;
+    let activeCode = null;
+    let renderTaskId = 0; 
+
+    const normEmail = e => String(e || '').trim().toLowerCase();
+    const setSession = email => sessionStorage.setItem('viewerUser', email);
+    const clearSession = () => sessionStorage.removeItem('viewerUser');
+    const getSession = () => sessionStorage.getItem('viewerUser');
+
+    const normDate = s => {
+      const t = String(s || '').trim();
+      if (!t) return '';
+      const cleaned = t.replace(/[-.]/g, '/');
+      const parts = cleaned.split('/');
+      if (parts.length !== 3) return t;
+      let [a,b,c] = parts.map(p=>p.trim());
+      let d,m,y;
+      if (a.length === 4) { y=a; m=b; d=c; } else { d=a; m=b; y=c; }
+      if (d.length===1) d='0'+d;
+      if (m.length===1) m='0'+m;
+      return `${d}/${m}/${y}`;
+    };
+
+    function splitCSVLine(line, delim){
+      const out = []; let cur = ''; let q = false; const d = delim || ',';
+      for (let i=0;i<line.length;i++){
+        const ch = line[i];
+        if (ch === '"'){ q = !q; continue; }
+        if (ch === d && !q){ out.push(cur); cur=''; continue; }
+        cur += ch;
+      }
+      out.push(cur);
+      return out.map(s=>s.trim());
+    }
+
+    function isAllowedValue(rawVal){
+      const v = String(rawVal || '').trim();
+      if (v === '' || v === '-') return false;
+      const num = parseFloat(v.replace(',', '.'));
+      return !Number.isNaN(num) && num >= 0 && num <= 1000;
+    }
+
+    async function loadUsersFromCSV(){
+      const res = await fetch(CSV_URL, { cache:'no-store' });
+      if(!res.ok) throw new Error('Fetch CSV gagal');
+      const raw = await res.text();
+      const text = raw.replace(/^\uFEFF/, '');
+      const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+      if(!lines.length) throw new Error('CSV kosong');
+
+      const delim = lines[0].includes(';') ? ';' : (lines[0].includes('\t') ? '\t' : ',');
+      const headers = splitCSVLine(lines[0], delim).map(h => h.trim());
+      const headersL = headers.map(h => h.toLowerCase());
+
+      let idxEmail = headersL.findIndex(h => h.includes('email'));
+      if (idxEmail === -1) idxEmail = 0;
+      let idxNama = headersL.findIndex(h => h.includes('nama'));
+      let idxDob = headersL.findIndex(h => h.includes('tanggal lahir') || h.includes('tgl lahir'));
+
+      const codeCols = [];
+      for (let i=0;i<headers.length;i++){
+        const h = String(headers[i] || '').trim();
+        if (/^\d{4,}[A-Za-z]{0,3}$/.test(h)) codeCols.push({ idx:i, code:h });
+      }
+
+      USERS = {};
+      for (let r=1;r<lines.length;r++){
+        const cols = splitCSVLine(lines[r], delim);
+        const emailCell = (cols[idxEmail]||'').trim();
+        const email = normEmail(emailCell);
+        if (!email || !email.includes('@')) continue;
+
+        const name = (idxNama>=0 ? cols[idxNama] : emailCell) || emailCell;
+        const dobRaw = idxDob>=0 ? cols[idxDob] : '';
+        const dob = normDate(dobRaw);
+
+        const allowedCodes = [];
+        for (const c of codeCols){
+          if (isAllowedValue(cols[c.idx])) allowedCodes.push(c.code);
+        }
+        USERS[email] = { name, dob, allowedCodes };
+      }
+      usersLoaded = true;
+    }
+
+    async function loadFilesIndex(){
+      const res = await fetch(FILES_INDEX_URL, { cache:'no-store' });
+      if (!res.ok) throw new Error('Gagal load files.json');
+      const json = await res.json();
+      const out = {};
+      for (const [code, fname] of Object.entries(json)){
+        const c = String(code || '').trim();
+        const f = String(fname || '').trim();
+        if (!/^\d{4,}[A-Za-z]{0,3}$/.test(c)) continue;
+        if (!f.toLowerCase().endsWith('.pdf')) continue;
+        if (!f.startsWith(c + '-')) continue;
+        out[c] = f;
+      }
+      FILES_MAP = out;
+      filesLoaded = true;
+    }
+
+    function loadPdfJs(){
+      return new Promise((resolve, reject) => {
+        if (pdfReady && window.pdfjsLib) return resolve();
+        const s = document.createElement('script');
+        s.src = `${ROOT}/pdf.min.js`;
+        s.onload = () => {
+          if (!window.pdfjsLib) return reject(new Error('pdfjsLib 404'));
+          pdfjsLib.GlobalWorkerOptions.workerSrc = `${ROOT}/pdf.worker.min.js`;
+          pdfReady = true;
+          resolve();
+        };
+        s.onerror = () => reject(new Error('Gagal load PDF libs'));
+        document.head.appendChild(s);
+      });
+    }
+
+    function syncWmToScroll(){
+      if (!els.viewerScroll) return;
+      const y = els.viewerScroll.scrollTop || 0;
+      els.wmOverlay.style.transform = `translateY(${y}px)`;
+    }
+
+    function buildWatermark(content){
+      els.wmGrid.innerHTML = '';
+      els.wmOverlay.classList.add('show');
+
+      syncWmToScroll();
+
+      const tileW = 400, tileH = 250;
+      const W = els.viewerScroll ? els.viewerScroll.clientWidth : window.innerWidth;
+      const H = els.viewerScroll ? els.viewerScroll.clientHeight : window.innerHeight;
+
+      const cols = Math.ceil(W / tileW) + 1;
+      const rows = Math.ceil(H / tileH) + 1;
+
+      els.wmGrid.style.gridTemplateColumns = `repeat(${cols}, ${tileW}px)`;
+      els.wmGrid.style.gridTemplateRows = `repeat(${rows}, ${tileH}px)`;
+
+      const total = cols * rows;
+      for(let i=0;i<total;i++){
+        const cell = document.createElement('div');
+        cell.className = 'wm-cell';
+        cell.textContent = content;
+        els.wmGrid.appendChild(cell);
+      }
+    }
+
+    function debounce(fn, ms){
+      let t;
+      return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+    }
+
+    function renderListForUser(email){
+      const user = USERS[email];
+      const q = String(els.searchInput.value||'').trim().toLowerCase();
+      
+      els.clearSearchBtn.style.display = q ? 'block' : 'none';
+
+      els.listEl.innerHTML = '';
+      const codes = (user?.allowedCodes || []).slice().sort();
+      const filtered = q ? codes.filter(c => c.toLowerCase().includes(q)) : codes;
+
+      els.docCount.textContent = `${filtered.length} File`;
+
+      if (!codes.length){
+        els.listEmpty.classList.remove('hidden');
+        return;
+      }
+      els.listEmpty.classList.add('hidden');
+
+      if (!filtered.length){
+        els.listEl.innerHTML = `<div class="text-xs text-center text-slate-400 py-6 italic border border-dashed border-slate-200 rounded-xl bg-slate-50 mx-2">Kode tidak ditemukan.</div>`;
+        return;
+      }
+
+      for (const code of filtered){
+        const isActive = (code === activeCode);
+        const row = document.createElement('div');
+        
+        row.className = `mx-1 p-3.5 rounded-xl border cursor-pointer transition-all duration-300 flex items-center justify-between group relative overflow-hidden mb-2.5 ${isActive ? 'bg-white border-primaryBlue shadow-md ring-1 ring-primaryBlue/10 translate-x-1' : 'bg-white border-slate-100 shadow-sm hover:border-blue-200 hover:bg-blue-50/50'}`;
+        
+        row.innerHTML = `
+          <div class="flex items-center gap-4 z-10">
+            <div class="w-10 h-10 rounded-lg ${isActive ? 'bg-primaryBlue text-white shadow-lg shadow-blue-500/30' : 'bg-slate-100 text-slate-400 group-hover:bg-white group-hover:text-primaryBlue'} flex items-center justify-center font-bold text-lg transition-all duration-300">
+               <i class="ph-fill ph-file-text"></i>
+            </div>
+            <div>
+               <div class="text-sm font-extrabold ${isActive ? 'text-primaryBlue' : 'text-slate-700 group-hover:text-slate-900'} transition-colors">${code}</div>
+               <div class="text-[10px] font-medium text-slate-400 flex items-center gap-1.5 mt-0.5">
+                 <span class="w-1.5 h-1.5 rounded-full ${isActive ? 'bg-green-500 animate-pulse' : 'bg-slate-300'}"></span> 
+                 PDF Document
+               </div>
+            </div>
+          </div>
+          <i class="ph-bold ph-caret-right ${isActive ? 'text-primaryBlue' : 'text-slate-300 group-hover:text-primaryBlue group-hover:translate-x-1'} transition-all"></i>
+        `;
+        row.onclick = () => openSoal(code);
+        els.listEl.appendChild(row);
+      }
+    }
+
+    async function openSoal(code){
+      if (!currentUserEmail) return;
+      const user = USERS[currentUserEmail];
+      if (!user || !user.allowedCodes.includes(code)) return;
+
+      const pdfName = FILES_MAP[code];
+      if (!pdfName){
+        alert('File PDF belum tersedia di server.');
+        return;
+      }
+
+      if (window.innerWidth < 768) {
+          els.sidebarPanel.classList.add('hidden');
+          els.sidebarPanel.classList.remove('flex');
+          
+          els.viewerPanel.classList.remove('hidden');
+          els.viewerPanel.classList.add('flex');
+      }
+
+      const myTaskId = ++renderTaskId;
+
+      activeCode = code;
+      els.currentCodeLabel.textContent = `Kode: ${code}`;
+      
+      renderListForUser(currentUserEmail);
+      els.viewerEmpty.style.display = 'none';
+      els.viewer.innerHTML = '';
+      els.viewer.style.opacity = '0';
+      els.viewer.style.transform = 'translateY(20px)';
+
+      const ts = new Date().toLocaleString('id-ID');
+      const wmText = `CONFIDENTIAL - RAHASIA\nPT Lentera Inovasi Global\n${currentUserEmail}\n${ts}`;
+      buildWatermark(wmText);
+
+      await loadPdfJs();
+      
+      if (myTaskId !== renderTaskId) return;
+
+      const urlPdf = `${ROOT}/${encodeURIComponent(pdfName)}`;
+      els.progressBar.style.width = '10%';
+
+      try {
+        const response = await fetch(urlPdf, { method: 'GET' });
+        if (!response.ok) throw new Error("Gagal ambil file");
+        const pdfData = await response.arrayBuffer();
+
+        if (myTaskId !== renderTaskId) return;
+        
+        const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+        const pdf = await loadingTask.promise;
+        
+        if (myTaskId !== renderTaskId) return;
+        els.progressBar.style.width = '40%';
+        
+        for (let p=1; p<=pdf.numPages; p++){
+          if (myTaskId !== renderTaskId) return;
+
+          const page = await pdf.getPage(p);
+          const viewport = page.getViewport({ scale: 1.5 });
+
+          const wrap = document.createElement('div');
+          wrap.className = 'page max-w-full';
+          wrap.style.maxWidth = Math.floor(viewport.width) + 'px';
+
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d', { alpha:false });
+          canvas.width = Math.floor(viewport.width);
+          canvas.height = Math.floor(viewport.height);
+
+          const overlay = document.createElement('div');
+          overlay.style.position = 'absolute';
+          overlay.style.inset = '0';
+          overlay.style.zIndex = '10';
+
+          wrap.appendChild(canvas);
+          wrap.appendChild(overlay);
+          els.viewer.appendChild(wrap);
+
+          await page.render({ canvasContext: ctx, viewport }).promise;
+          
+          if (myTaskId === renderTaskId) {
+             els.progressBar.style.width = Math.round(40 + (p/pdf.numPages)*60) + '%';
+          }
+        }
+        
+        if (myTaskId === renderTaskId) {
+            setTimeout(() => {
+                els.viewer.style.opacity = '1';
+                els.viewer.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+      } catch(err){
+        if (myTaskId !== renderTaskId) return;
+        console.error(err);
+        els.viewer.innerHTML = `<div class="flex flex-col items-center justify-center p-12 text-center h-full"><i class="ph-duotone ph-warning-circle text-4xl text-red-400 mb-2"></i><span class="font-bold text-slate-600">Gagal memuat dokumen</span></div>`;
+        els.viewer.style.opacity = '1';
+        els.viewer.style.transform = 'translateY(0)';
+      } finally {
+        if (myTaskId === renderTaskId) {
+            setTimeout(()=>{ els.progressBar.style.width = '0%'; }, 500);
+        }
+      }
+    }
+
+    function closeViewer(){
+      if (window.innerWidth < 768) {
+          els.sidebarPanel.classList.remove('hidden');
+          els.sidebarPanel.classList.add('flex');
+          
+          els.viewerPanel.classList.add('hidden');
+          els.viewerPanel.classList.remove('flex');
+      }
+
+      activeCode = null;
+      els.currentCodeLabel.textContent = '—';
+      els.viewer.innerHTML = '';
+      els.viewerEmpty.style.display = 'flex';
+      renderListForUser(currentUserEmail);
+    }
+
+    function applyAllowedAndExistingFor(email){
+      const user = USERS[email];
+      if (!user) return [];
+      const allowedSet = new Set((user.allowedCodes || []).filter(Boolean));
+      for (const code of Array.from(allowedSet)){
+        if (/^\d{4,}$/.test(code)){
+          for (const suffix of ['M', 'RW']){
+            const subCode = `${code}${suffix}`;
+            if (FILES_MAP[subCode]) allowedSet.add(subCode);
+          }
+        }
+      }
+      const allowed = Array.from(allowedSet);
+      const existing = allowed.filter(code => !!FILES_MAP[code]);
+      user.allowedCodes = Array.from(new Set(existing));
+      return user.allowedCodes;
+    }
+
+    async function tryLogin(){
+      els.errDiv.textContent = '';
+      els.errDiv.className = "mt-5 min-h-[20px] text-xs font-bold text-red-500 text-center flex items-center justify-center gap-1"; 
+
+      if (!usersLoaded || !filesLoaded){
+        els.errDiv.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> Menghubungkan ke server...`;
+        els.errDiv.className = "mt-5 min-h-[20px] text-xs font-bold text-blue-500 text-center flex items-center justify-center gap-1";
+        return;
+      }
+
+      const email = normEmail(els.emailInput.value);
+      const dobInput = String(els.certInput.value || '').trim();
+      
+      if (!email || !dobInput){ 
+          els.errDiv.innerHTML = `<i class="ph-bold ph-warning-circle"></i> Mohon lengkapi semua kolom.`; 
+          return; 
+      }
+
+      const user = USERS[email];
+      const dobNorm = normDate(dobInput);
+
+      if (!user || !user.dob || user.dob !== dobNorm){
+        els.errDiv.innerHTML = `<i class="ph-bold ph-x-circle"></i> Email atau Tanggal Lahir salah.`;
+        return;
+      }
+
+      const existingCodes = applyAllowedAndExistingFor(email);
+      if (!existingCodes.length){
+        els.errDiv.innerHTML = `<i class="ph-bold ph-info"></i> Akun valid, tapi belum ada dokumen.`;
+        return;
+      }
+
+      currentUserEmail = email;
+      setSession(email);
+      
+      els.userLabel.textContent = user.name || email;
+      
+      els.modal.classList.add('hidden');
+      els.warnModal.classList.add('hidden');
+      els.topbar.classList.remove('hidden'); 
+      els.topbar.classList.add('flex');
+      els.app.classList.remove('hidden');
+      
+      renderListForUser(email);
+    }
+
+    /* ========= EVENTS ========= */
+    els.loginBtn.addEventListener('click', tryLogin);
+    [els.emailInput, els.certInput].forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); }));
+    
+    els.logoutBtn.addEventListener('click', () => { clearSession(); location.reload(); });
+    els.warnOkBtn.addEventListener('click', () => {
+      els.warnModal.classList.add('hidden');
+      els.modal.classList.remove('hidden');
+    });
+
+    els.searchInput.addEventListener('input', () => { if(currentUserEmail) renderListForUser(currentUserEmail); });
+    els.clearSearchBtn.addEventListener('click', () => { els.searchInput.value = ''; renderListForUser(currentUserEmail); });
+
+    // TOGGLE SIDEBAR (Full View)
+    let sidebarHidden = false;
+    const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+    const toggleSidebarIcon = document.getElementById('toggleSidebarIcon');
+    const toggleSidebarLabel = document.getElementById('toggleSidebarLabel');
+    toggleSidebarBtn?.addEventListener('click', () => {
+      sidebarHidden = !sidebarHidden;
+      els.sidebarPanel.style.display = sidebarHidden ? 'none' : '';
+      toggleSidebarIcon.className = sidebarHidden ? 'ph-bold ph-sidebar-simple text-base' : 'ph-bold ph-sidebar-simple text-base';
+      toggleSidebarLabel.textContent = sidebarHidden ? 'Tampilkan Panel' : 'Full View';
+      toggleSidebarBtn.classList.toggle('text-primaryBlue', sidebarHidden);
+    });
+    
+    // REFRESH BUTTON LOGIC (Fixed)
+    els.refreshBtn.addEventListener('click', async () => {
+        const icon = els.refreshBtn.querySelector('i');
+        icon.classList.add('animate-spin-fast'); 
+        els.refreshBtn.classList.add('bg-blue-50', 'text-primaryBlue');
+
+        try {
+            await Promise.all([loadUsersFromCSV(), loadFilesIndex()]);
+            if(currentUserEmail) {
+                applyAllowedAndExistingFor(currentUserEmail);
+                renderListForUser(currentUserEmail);
+                
+                if (activeCode) {
+                    const user = USERS[currentUserEmail];
+                    if(!user.allowedCodes.includes(activeCode)) {
+                        closeViewer();
+                        alert('Akses dokumen ini telah dicabut.');
+                    }
+                }
+            }
+        } catch(e) { console.error(e); }
+        
+        setTimeout(() => {
+            icon.classList.remove('animate-spin-fast');
+            els.refreshBtn.classList.remove('bg-blue-50', 'text-primaryBlue');
+        }, 800);
+    });
+
+    els.backToListBtn.addEventListener('click', closeViewer);
+
+    window.addEventListener('contextmenu', e => e.preventDefault());
+    window.addEventListener('keydown', e => {
+      const k = e.key.toLowerCase();
+      if ((e.ctrlKey || e.metaKey) && (k === 's' || k === 'p')) e.preventDefault();
+    });
+
+    if (els.viewerScroll) {
+      els.viewerScroll.addEventListener('scroll', () => {
+        syncWmToScroll();
+      }, { passive: true });
+    }
+
+    window.addEventListener('resize', debounce(() => {
+      if (!currentUserEmail) return;
+      const ts = new Date().toLocaleString('id-ID');
+      const wmText = `CONFIDENTIAL - RAHASIA\nPT Lentera Inovasi Global\n${currentUserEmail}\n${ts}`;
+      buildWatermark(wmText);
+    }, 200));
+
+    /* ========= INIT ========= */
+    (async function init(){
+      try{
+        await Promise.all([loadUsersFromCSV(), loadFilesIndex()]);
+      } catch(err){
+        console.error(err);
+        els.errDiv.textContent = 'Gagal terhubung ke database.';
+        els.modal.classList.remove('hidden');
+        return;
+      }
+
+      const existing = getSession();
+      if (existing){
+        currentUserEmail = existing;
+        const user = USERS[existing];
+        if (!user) { clearSession(); els.warnModal.classList.remove('hidden'); return; }
+        
+        applyAllowedAndExistingFor(existing);
+        els.userLabel.textContent = user.name || existing;
+        
+        els.topbar.classList.remove('hidden');
+        els.topbar.classList.add('flex');
+        els.app.classList.remove('hidden');
+        renderListForUser(existing);
+      } else {
+        els.warnModal.classList.remove('hidden');
+      }
+    })();
+  </script>
+</body>
+</html>

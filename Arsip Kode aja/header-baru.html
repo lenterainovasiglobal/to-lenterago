@@ -1,0 +1,226 @@
+<!-- ===== HEADER START ===== -->
+
+<!-- Import fonts (taruh di dalam <head> halaman HTML) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap">
+
+<style>
+  :root {
+    /* Warna identitas Lenterago */
+    --ltg-blue:   #00b7cd;  /* biru muda Lenterago */
+    --ltg-orange: #fbc03c;  /* oranye Lenterago   */
+    --ltg-white:  #ffffff;  /* putih              */
+    --ltg-dark:   #151821;  /* untuk teks hitam elegan (on white) */
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  header.ltg-header {
+    position: fixed;
+    top: 0;
+    left: 0;                      /* baru */
+    width: 100%;                  /* baru */
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .ltg-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  /* Logo area */
+  .ltg-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .ltg-logo-img {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .ltg-wordmark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .ltg-tagline {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  /* Navigation */
+  .ltg-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .ltg-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ltg-nav-links a {
+    position: relative;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--ltg-dark);
+    padding-bottom: 4px;
+    transition:
+      color 0.18s ease-out,
+      transform 0.18s ease-out;
+  }
+
+  .ltg-nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--ltg-orange), var(--ltg-blue));
+    transition: width 0.22s ease-out;
+  }
+
+  .ltg-nav-links a:hover,
+  .ltg-nav-links a:focus {
+    color: var(--ltg-blue);
+    transform: translateY(-1px);
+  }
+
+  .ltg-nav-links a:hover::after,
+  .ltg-nav-links a:focus::after,
+  .ltg-nav-links a.is-active::after {
+    width: 100%;
+  }
+
+  /* Mobile */
+  .ltg-menu-toggle {
+    display: none;
+    border: none;
+    background: transparent;
+    padding: 4px;
+    cursor: pointer;
+  }
+
+  .ltg-menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    margin: 4px 0;
+    border-radius: 999px;
+    background: var(--ltg-dark);
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  }
+
+  @media (max-width: 768px) {
+    .ltg-header-inner {
+      padding: 10px 16px;
+    }
+
+    .ltg-tagline {
+      display: none;
+    }
+
+    .ltg-nav {
+      position: fixed;
+      inset: 60px 16px auto 16px;
+      background: var(--ltg-white);
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+      padding: 14px 18px 18px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      transform: translateY(-16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+    }
+
+    header.ltg-header.is-open .ltg-nav {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .ltg-nav-links {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .ltg-menu-toggle {
+      display: inline-block;
+    }
+  }
+
+  /* Variasi mono (logo & teks hitam) untuk kondisi tertentu */
+  .ltg-header--mono .ltg-nav-links a {
+    color: #111111;
+  }
+</style>
+
+<header class="ltg-header ltg-header--mono" id="ltgHeader">
+  
+  <!-- Favicon (sebaiknya taruh di <head> pada implementasi nyata) -->
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <div class="ltg-header-inner">
+
+    <!-- Logo -->
+    <a href="https://www.lenterago.id" class="ltg-logo-wrap">
+      <img src="/assets/logo.svg" alt="Lenterago Logo" class="ltg-logo-img">
+      <div class="ltg-wordmark">
+        <div class="ltg-tagline"><strong>Premium Education</strong></div>
+      </div>
+    </a>
+
+    <!-- Tombol menu (mobile) -->
+    <button class="ltg-menu-toggle" type="button" aria-label="Buka navigasi"
+      onclick="document.getElementById('ltgHeader').classList.toggle('is-open')">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Navigasi -->
+    <nav class="ltg-nav" aria-label="Navigasi utama">
+      <div class="ltg-nav-links">
+        <a href="/">Home</a>
+        <a href="/cek-hasil">Cek Hasil</a>
+        <a href="/arsip-soal" class="is-active" target="_blank" rel="noopener">Arsip Soal</a>
+        <a href="/birth-date" target="_blank" rel="noopener">Update Tanggal Lahir</a>
+        <a href="/daftar" target="_blank" rel="noopener">Daftar TO</a>
+      </div>
+    </nav>
+
+  </div>
+</header>

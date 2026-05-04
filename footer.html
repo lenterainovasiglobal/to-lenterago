@@ -1,0 +1,84 @@
+<footer id="kontak" class="bg-white pt-14 border-t border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12">
+      <div>
+        <img class="h-10 w-auto mb-4" alt="Lenterago Logo" src="/assets/biru.png" />
+        <p class="text-slate-700 text-sm leading-relaxed font-medium">
+          Bimbel persiapan kuliah dengan mentor berpengalaman dan sistem belajar terstruktur.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-extrabold text-slate-900 text-lg mb-5">Program</h3>
+        <ul class="text-slate-700 text-base space-y-2 font-medium">
+          <li>Bimbel Reguler</li>
+          <li>Bimbel SAT</li>
+          <li>Bimbel SNBT</li>
+          <li>Bimbel IELTS</li>
+          <li>Bimbel TOEFL</li>
+          <li>Tryout Online</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-extrabold text-slate-900 text-lg mb-5">Layanan</h3>
+        <ul class="text-slate-700 text-base space-y-2 font-medium">
+          <li>Try Out Online</li>
+          <li>Konsultasi Gratis</li>
+          <li>Bimbingan Karir</li>
+          <li>Kelas Online</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-extrabold text-slate-900 text-lg mb-5">Kontak</h3>
+        <ul class="text-slate-700 text-base space-y-2 font-medium">
+          <li>📍 Sovereign Plaza 12nd Floor</li>
+          <li>📞 0851-1122-1170</li>
+          <li>✉ office@lenterago.id</li>
+          <li>🕒 Senin - Sabtu: 08:00 - 20:00</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-[#1c6ecc] py-3">
+    <p class="text-center text-white text-sm font-medium">
+      © 2026 Lenterago. Semua hak cipta dilindungi.
+    </p>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<!-- <a id="wa-tanya-admin"
+  href="https://wa.me/6285111221170" target="_blank" rel="noopener noreferrer"
+   class="fixed right-6 bottom-6 z-[9000] hover:scale-110 transition-transform duration-300 group">
+  <div class="absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-30 group-hover:opacity-50"></div>
+  <img src="/assets/tanya-admin.png" alt="Tanya Admin"
+       class="relative w-[180px] md:w-[260px] object-contain drop-shadow-2xl">
+</a> -->
+
+<!-- Floating WhatsApp -->
+<a href="#"
+   id="wa-tanya-admin"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="fixed right-6 bottom-6 z-[9000] hover:scale-110 transition-transform duration-300 group"
+   onclick="(function(e){
+     e.preventDefault();
+     const phone='6285111221170';
+     const pageUrl=window.location.href;
+     const pageTitle=document.title || 'Halaman tidak diketahui';
+     const msg =
+       'Halo Admin,\n\n' +
+       'Saya klik dari halaman:\n' +
+       pageTitle + '\n' +
+       pageUrl + '\n\n' +
+       'Mohon dibantu ya.';
+     const wa='https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+     window.open(wa, '_blank', 'noopener,noreferrer');
+   })(event);">
+  <div class="absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-30 group-hover:opacity-50"></div>
+  <img src="/assets/tanya-admin.png" alt="Tanya Admin"
+       class="relative w-[180px] md:w-[260px] object-contain drop-shadow-2xl">
+</a>
